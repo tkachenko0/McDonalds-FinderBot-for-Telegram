@@ -1,6 +1,8 @@
 # Mac/OSX
 .DS_Store
 
+dump_models/
+
 .vscode/*
 !.vscode/settings.json
 !.vscode/tasks.json

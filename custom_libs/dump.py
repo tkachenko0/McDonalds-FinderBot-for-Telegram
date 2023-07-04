@@ -2,7 +2,7 @@ import joblib
 import os
 
 extension = 'pkl'
-folder = '../dump_models'
+folder = 'dump_models'
 
 
 def save_vectorizer(vectorizer, filename):
