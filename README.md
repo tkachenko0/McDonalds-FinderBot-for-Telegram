@@ -18,6 +18,7 @@
 ## Roadmap ed Info
 
 - Ti serve Anaconda
+- La prima cosa che farai è leggerti il notebook insieme al link della [Soluzione 1](https://wisdomml.in/drug-recommendation-system-using-nlp-and-machine-learning-approach-in-python/)
 - All'inizio lavoriamo con jupyter poi quando dobbiamo fare il bot (se lo faremo) andremo in scripting su PyCharm
 - Adesso cerchiamo di capire cosa fanno gli altri in modo da avere una piccola libreria
 - Il nostro problema maggiore è scegliere il dataset e cosa vogliamo fare in generale
