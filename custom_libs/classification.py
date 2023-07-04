@@ -5,7 +5,6 @@ from sklearn.linear_model import PassiveAggressiveClassifier
 from sklearn.feature_extraction.text import CountVectorizer, TfidfVectorizer
 
 from sklearn.linear_model import PassiveAggressiveClassifier
-from sklearn.feature_extraction.text import TfidfVectorizer
 
 # import custom modules
 import custom_libs.plotting as plotting

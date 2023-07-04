@@ -3,7 +3,7 @@ import joblib
 extention = 'pkl'
 
 
-def save_vercorizer(vectorizer, filename):
+def save_vectorizer(vectorizer, filename):
     joblib.dump(vectorizer, f'{filename}.{extention}')
 
 
