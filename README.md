@@ -8,7 +8,7 @@
 
     Ovunque, io sto lavorando sul file [nb_progetto.ipynb](nb_progetto.ipynb)
 
-- Puoi leggerti velocemente il codice degli altri due notebook (consigliato) che adesso sono molto corti, oppure passare direttamente a [nb_progetto.ipynb](nb_progetto.ipynb). Ci sono alcune commenti che ti renderanno più facile capire cosa ho fatto, cosa serve fare (ad esempio il preprocessing) e dove andare a cercare codice già pronto.
+- Puoi leggerti velocemente il codice degli altri due notebook (consigliato) che adesso sono molto corti, oppure passare direttamente a [nb_progetto.ipynb](nb_progetto.ipynb). Ci sono alcuni commenti che ti renderanno più facile capire cosa ho fatto, cosa serve fare (ad esempio il preprocessing) e dove andare a cercare codice già pronto.
 
 - Cosa potrei fare?
 
