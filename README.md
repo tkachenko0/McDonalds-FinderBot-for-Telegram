@@ -1,26 +1,29 @@
 # NLP-Project
 
-> Come per DS questa repo è temporanea fino a quando non ci viene approvato/assegnato un progetto
+- Dove posso trovare il dataset?
 
-- [Dataset](https://archive.ics.uci.edu/dataset/462/drug+review+dataset+drugs+com)
+    Lo ho messo in gitignore e mandato su telegram. Mitti solo la cartella dataset nella root del progetto
 
-- [Un'altro dataset simile](https://www.kaggle.com/datasets/niyarrbarman/symptom2disease)
+- Dove posso scrivere?
 
-- [Soluzione 1](https://wisdomml.in/drug-recommendation-system-using-nlp-and-machine-learning-approach-in-python/)
+    Ovunque, io sto lavorando sul file [nb_progetto.ipynb](nb_progetto.ipynb)
 
-- [Soluzione 2](https://www.kaggle.com/code/chocozzz/recommendation-medicines-by-using-a-review/notebook)
-> l'idea nel caso non sarebbe copiare il progetto, ma solo le tecniche per poi usarle nel nostro.
+- Puoi leggerti velocemente il codice degli altri due notebook (consigliato) che adesso sono molto corti, oppure passare direttamente a [nb_progetto.ipynb](nb_progetto.ipynb). Ci sono alcune commenti che ti renderanno più facile capire cosa ho fatto, cosa serve fare (ad esempio il preprocessing) e dove andare a cercare codice già pronto.
 
-## Altro
-- https://www.geeksforgeeks.org/nlp-gensim-tutorial-complete-guide-for-beginners/
-- https://www.machinelearningplus.com/nlp/natural-language-processing-guide/?utm_content=cmp-true
+- Cosa potrei fare?
 
-## Roadmap ed Info
+    - Usare la funzione preprocessing visto che per ora non ne facciamo. Ti ho messo nel notebook due linee di codice commentato. 
+    > Attenzione se la utilizzi in fase di induzione e test con la funzione test_classifier, servirà che to lo faccia anche per la funzione predict_sentences(). Ma non credo ti serva usarla.
 
-- Ti serve Anaconda
-- La prima cosa che farai è leggerti il notebook insieme al link della [Soluzione 1](https://wisdomml.in/drug-recommendation-system-using-nlp-and-machine-learning-approach-in-python/)
-- All'inizio lavoriamo con jupyter poi quando dobbiamo fare il bot (se lo faremo) andremo in scripting su PyCharm
-- Adesso cerchiamo di capire cosa fanno gli altri in modo da avere una piccola libreria
-- Il nostro problema maggiore è scegliere il dataset e cosa vogliamo fare in generale
+    - Testare diverse configurazioni di Tf-idf vectorizer come nel esempio del notebook medico
+
+    - Provare gli altri due classificatori (nel codice c'è svm)
+
+    - Provare a fare la funzione che in base alla posizione ed un raggio va a consigliare il ristorante in base al numero delle stelline
+
+    - Replicare l'esperimento del tipo che non riesce a raggiungere una accuratezza alta classificando le recensioni in base al numero di stelline (nel codice del notebook abbiamo quello sulla sentiment analysis)
+
+- Lui ha detto di provare un'altra libreria per fare un confronto senza specificare altri dettagli... Vedremo dopo che abbiamo fatto le nostre di prove
 
 
+> Insomma, tutta sta lettura per non capire nulla invece di passare a [nb_progetto.ipynb](nb_progetto.ipynb) per capire tutto in meno di 2 minuti. 😅
