@@ -2,6 +2,8 @@
 .DS_Store
 
 dump_models/
+datasets/
+.vscode/
 
 .vscode/*
 !.vscode/settings.json
