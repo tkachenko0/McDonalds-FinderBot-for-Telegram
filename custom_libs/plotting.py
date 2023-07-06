@@ -5,10 +5,10 @@ import itertools
 import numpy as np
 
 
-def plot_word_cloud(X, class_name):
+def plot_word_cloud(X, class_name, column_name):
     plt.figure(figsize=(20, 20))
     wc = WordCloud(max_words=500, width=1600,
-                   height=800).generate(" ".join(X.review))
+                   height=800).generate(" ".join(X[column_name]))
     plt.imshow(wc, interpolation='bilinear')
     plt.title(f'Word cloud for {class_name}', fontsize=14)
 
