@@ -9,7 +9,7 @@
 
 - 💀 Capire quale sia il miglior classificatore da usare (nella presentazione mettiamo tutti i test che abbiamo fatto)
 
-- Replicare l'esperimento del tipo che non riesce a raggiungere una accuratezza alta classificando le recensioni in base al numero di stelline (nel codice del notebook abbiamo quello sulla sentiment analysis)
+- Replicare l'esperimento del tipo che non riesce a raggiungere una accuratezza alta classificando le recensioni in base al numero di stelline 
 
 - 💀 Fare la nostra funzione principale che usa un classficatore sul sentimento (quindi non usiamo più le stelline) e che data una distanza e una posizione dica quale sia quello migliore.
 
@@ -19,7 +19,7 @@
 ```bash
 $ pip install python-telegram-bot --upgrade
 $ cd custom_libs
-$ python3 pot.py
+$ python3 bot.py
 ```
 
 > Testo di esempio di uso (coordinate, distanza massima): 30.460718, -97.792874, 10<br>
