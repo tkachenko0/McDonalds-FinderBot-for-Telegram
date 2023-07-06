@@ -5,6 +5,8 @@ dump_models/
 datasets/
 .vscode/
 
+review_clean.txt
+
 .vscode/*
 !.vscode/settings.json
 !.vscode/tasks.json

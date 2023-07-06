@@ -76,3 +76,24 @@ def get_restaurant_best_rated(df):
         'store_address', 'latitude', 'longitude', 'id']]
 
     return result.groupby('id').first()
+
+
+def select_best_restaurant_from_stars(df, current_position, max_distance):
+    points = select_points_of_interest(df, current_position, max_distance)
+    best_point = get_restaurant_best_rated(points)
+    return best_point
+
+
+def best_restaurant_from_stars_reply(current_position, max_distance):
+    """per ora è scarna perchè è solo una prova,
+    inoltre siccome select_best_restaurant_from_stars resttuisce un tipo di parametro ambiguo sarà da rivedere
+    """
+    df = pd.read_csv(
+        '../datasets/McDonald_s_Reviews_preprocessed.csv', encoding="latin-1")
+
+    result = select_best_restaurant_from_stars(df, current_position, max_distance)
+
+    if type(result) == str and result == 'no restaurant found':
+        return result
+    else:
+        return f"Best restaurant is {result['store_address'].values[0]}"
