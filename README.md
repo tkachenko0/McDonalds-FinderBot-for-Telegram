@@ -16,6 +16,14 @@
 - Provare quella libreria che ha detto lui
 
 - Fare il bot telegram
+```bash
+$ pip install python-telegram-bot --upgrade
+$ cd custom_libs
+$ python3 pot.py
+```
 
+> Testo di esempio di uso (coordinate, distanza massima): 30.460718, -97.792874, 10<br>
+> Testo di esempio di uso (coordinate, distanza massima): sdasdctrasd<br>
+> Testo di esempio di uso (coordinate, distanza massima): 1, 1, 1<br>
 
 💀 - abbiamo quel problema
