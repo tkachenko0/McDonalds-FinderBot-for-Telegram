@@ -3,14 +3,14 @@ import pandas as pd
 
 
 def select_points_of_interest(df, current_position, max_distance):
-    """this is a function that takes a dataframe, array of current position, max distance and returns a dataframe
+    """Takes a dataframe, array of current position, max distance and returns a dataframe
        with the points of interest that are within the max distance from the current position"""
     selected_points = []
 
     # Approximate radius of the Earth in kilometers
     earth_radius = 6371.0
 
-    # current coords
+    # Current coords
     current_latitude = current_position[0]
     current_longitude = current_position[1]
 
@@ -41,24 +41,24 @@ def select_points_of_interest(df, current_position, max_distance):
         if distance <= max_distance:
             selected_points.append(row)
 
-    # if the list is empty return an empty dataframe
+    # If the list is empty return an empty dataframe
     if selected_points == []:
         return df.drop(df.index[:])
 
-    # else return the dataframe with the selected points
+    # Else return the dataframe with the selected points
     df_points = pd.DataFrame(selected_points)
     return df_points.drop(df_points.columns[0], axis=1)
 
 
-# function that takes a dataframe with point of interest and returns the id
-# of the restaurant with the best rating
 def get_id_restaurant_best_rated(df):
+    """Takes a dataframe with point of interest and returns the 
+       id of the restaurant with the best rating"""
 
-    # if the dataframe is empty return -1
+    # If the dataframe is empty return -1
     if df.empty:
         return -1
 
-    # else return the id of the restaurant with the best rating
+    # Else return the id of the restaurant with the best rating
     df_app = df.copy()
     df_app = df_app.groupby('id')['rating_number'].mean()
     df_app.sort_values(ascending=False)
@@ -66,9 +66,8 @@ def get_id_restaurant_best_rated(df):
     return df_app.index[0]
 
 
-# function that takes a dataframe with point of interest
-# and returns the restaurant with the best rating
 def get_restaurant_best_rated(df):
+    """Takes a dataframe with point of interest and returns the restaurant with the best rating"""
     id = get_id_restaurant_best_rated(df)
     if id == -1:
         return 'no restaurant found'
