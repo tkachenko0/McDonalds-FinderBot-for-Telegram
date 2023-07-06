@@ -1,15 +1,5 @@
 # NLP-Project
 
-- Dove posso trovare il dataset?
-
-    Lo ho messo in gitignore e mandato su telegram. Mitti solo la cartella dataset nella root del progetto
-
-- Dove posso scrivere?
-
-    Ovunque, io sto lavorando sul file [nb_progetto.ipynb](nb_progetto.ipynb)
-
-- Puoi leggerti velocemente il codice degli altri due notebook (consigliato) che adesso sono molto corti, oppure passare direttamente a [nb_progetto.ipynb](nb_progetto.ipynb). Ci sono alcuni commenti che ti renderanno più facile capire cosa ho fatto, cosa serve fare (ad esempio il preprocessing) e dove andare a cercare codice già pronto.
-
 - Cosa potrei fare?
 
     - Usare la funzione preprocessing visto che per ora non ne facciamo. Ti ho messo nel notebook due linee di codice commentato. 
@@ -32,6 +22,3 @@
     - Replicare l'esperimento del tipo che non riesce a raggiungere una accuratezza alta classificando le recensioni in base al numero di stelline (nel codice del notebook abbiamo quello sulla sentiment analysis)
 
 - Lui ha detto di provare un'altra libreria per fare un confronto senza specificare altri dettagli... Vedremo dopo che abbiamo fatto le nostre di prove
-
-
-> Insomma, tutta sta lettura per non capire nulla invece di passare a [nb_progetto.ipynb](nb_progetto.ipynb) per capire tutto in meno di 2 minuti. 😅
