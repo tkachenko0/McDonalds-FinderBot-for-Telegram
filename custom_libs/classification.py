@@ -48,7 +48,17 @@ def most_informative_feature_for_class(vectorizer, classifier, classlabel, n=10)
     for coef, feat in topn:
         print(classlabel, feat, coef)
 
-# from medical example
+
+def test_classifiers(model_classes, vectorizers, x_train, x_test, y_train, y_test):
+    for model_class in model_classes:
+        for i, vectorizer in enumerate(vectorizers):
+            model = model_class()
+            x_train_trasformed = vectorizer.fit_transform(x_train)
+            x_test_trasformed = vectorizer.transform(x_test)
+            y_pred = train_and_predict(model, x_train_trasformed, x_test_trasformed, y_train)
+            accuracy = metrics.accuracy_score(y_test, y_pred)
+            print(f"Accuracy for {model_class.__name__} with vectorizer {i}:", accuracy)
+        print("\n")
 
 
 def predict_sentences(lst_sentences, vectorizer, model, preprocess_function):
