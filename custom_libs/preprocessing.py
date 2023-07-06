@@ -14,11 +14,16 @@ def add_id_column(df, columns):
     num = df['id'].nunique()
     print("Number of unique ids: ", num)
 
-#add a column with the number of rating without the word "star" or "stars"
-def add_rating_number_column(df): 
+
+def add_rating_number_column(df):
+    """Add a column with the number of rating without the word "star" or "stars"."""
     df.insert(df.columns.get_loc("rating")+1, "rating_number", 0)
     df['rating_number'] = df['rating'].apply(
         lambda x: int(re.sub(r'\b(star|stars)\b', '', x, flags=re.IGNORECASE)))
+    
+    # proposta: cambiare il nome della funzione in clean_rating_column ed agguingere questo
+    # df.drop('rating', axis=1, inplace=True)
+
 
 def preprocess_text1(raw_review):
     review_text = BeautifulSoup(
@@ -30,15 +35,16 @@ def preprocess_text1(raw_review):
 
     meaningful_words = [w for w in words if not w in stopwords.words(
         'english')]  # delete stopwords
-    
+
     ####################### Rimozione della parola mcDonalds orders #######################
-    words_to_be_deleted = ["Mcdonalds","Mcdonald", "mc donald", "mcd" ,"order","\u00BD","\u00EF"]
-    
-    cleaned_words = [w for w in meaningful_words if not w in 
-                     [s.lower() for s in words_to_be_deleted] ]#delete some words
+    words_to_be_deleted = ["Mcdonalds", "Mcdonald",
+                           "mc donald", "mcd", "order", "\u00BD", "\u00EF"]
+
+    cleaned_words = [w for w in meaningful_words if not w in
+                     [s.lower() for s in words_to_be_deleted]]  # delete some words
     #####################################################################################
 
     lemmitize_words = [WordNetLemmatizer().lemmatize(w)
                        for w in cleaned_words]  # lemmitization
-    
+
     return (' '.join(lemmitize_words))  # space join words

@@ -6,6 +6,7 @@ from nltk.sentiment import SentimentIntensityAnalyzer
 # import custom modules
 import custom_libs.plotting as plotting
 
+
 class Sentiment:
     NEGATIVE = 'Negative'
     NEUTRAL = 'Neutral'
@@ -14,6 +15,7 @@ class Sentiment:
     @staticmethod
     def get_all():
         return [Sentiment.NEGATIVE, Sentiment.NEUTRAL, Sentiment.POSITIVE]
+
 
 def train_and_predict(model, x_train, x_test, y_train):
     model.fit(x_train, y_train)
@@ -47,12 +49,14 @@ def most_informative_feature_for_class(vectorizer, classifier, classlabel, n=10)
         print(classlabel, feat, coef)
 
 # from medical example
+
+
 def predict_sentences(lst_sentences, vectorizer, model, preprocess_function):
     df_test = pd.DataFrame(lst_sentences, columns=['test_sent'])
 
     if preprocess_function is not None:
         df_test["test_sent"] = df_test["test_sent"].apply(preprocess_function)
-    
+
     X = vectorizer.transform(lst_sentences)
     prediction = model.predict(X)
     df_test['prediction'] = prediction

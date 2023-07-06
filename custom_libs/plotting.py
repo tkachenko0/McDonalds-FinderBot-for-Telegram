@@ -1,8 +1,8 @@
+import numpy as np
+import itertools
 from wordcloud import WordCloud
 import matplotlib.pyplot as plt
 get_ipython().run_line_magic('matplotlib', 'inline')
-import itertools
-import numpy as np
 
 
 def plot_word_cloud(X, class_name, column_name):
@@ -11,7 +11,6 @@ def plot_word_cloud(X, class_name, column_name):
                    height=800).generate(" ".join(X[column_name]))
     plt.imshow(wc, interpolation='bilinear')
     plt.title(f'Word cloud for {class_name}', fontsize=14)
-
 
 
 def plot_confusion_matrix(cm, classes,
