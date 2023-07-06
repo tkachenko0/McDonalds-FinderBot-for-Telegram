@@ -14,11 +14,11 @@ def add_id_column(df, columns):
     num = df['id'].nunique()
     print("Number of unique ids: ", num)
 
+#add a column with the number of rating without the word "star" or "stars"
 def add_rating_number_column(df): 
     df.insert(df.columns.get_loc("rating")+1, "rating_number", 0)
-    df['rating_number'] = df['rating'].apply(lambda x: int(re.sub(r'\b(star|stars)\b', '', x, flags=re.IGNORECASE)))
-#
-
+    df['rating_number'] = df['rating'].apply(
+        lambda x: int(re.sub(r'\b(star|stars)\b', '', x, flags=re.IGNORECASE)))
 
 def preprocess_text1(raw_review):
     review_text = BeautifulSoup(
@@ -38,13 +38,6 @@ def preprocess_text1(raw_review):
                      [s.lower() for s in words_to_be_deleted] ]#delete some words
     #####################################################################################
 
-    #function to localizate a points in a range of 100 meters with latitude and longitude
-    #def localizate_points(df, lat, lon):
-    #    df['lat'] = df[lat].apply(lambda x: round(x, 2))
-    #    df['lon'] = df[lon].apply(lambda x: round(x, 2))
-    #    df['lat_lon'] = df[['lat', 'lon']].apply(tuple, axis=1)
-
-    #    
     lemmitize_words = [WordNetLemmatizer().lemmatize(w)
                        for w in cleaned_words]  # lemmitization
     

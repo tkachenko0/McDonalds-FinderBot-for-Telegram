@@ -1,7 +1,6 @@
 from math import sin, cos, sqrt, atan2, radians
 import pandas as pd
 
-#comments in python start with a hash
 #this is a function that takes a dataframe, array of current position, max distance and returns a dataframe 
 #with the points of interest that are within the max distance from the current position
 def select_points_of_interest(df,current_position, max_distance):
