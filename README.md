@@ -1,24 +1,18 @@
 # NLP-Project
 
-- Cosa potrei fare?
+- Preprocessing
+    - Verificare se si può migliorare ancora
+    - Cominciare a guardare cosa di questo si può mettere nella presentazione, quali esempi fare
 
-    - Usare la funzione preprocessing visto che per ora non ne facciamo. Ti ho messo nel notebook due linee di codice commentato. 
-    
-    
-    >>>> Modifiche apportate: Ho integrato la funzione preprocessing e ho inserito le righe di codice per togliere alcune parole e caratteri che comparivano nel testo. 
-    >>>> Ho cambiato la firma di alcune funzioni per considereare la colonna "review_clean" e non più quella originale 
-    
-    
-    > Attenzione se la utilizzi in fase di induzione e test con la funzione test_classifier, servirà che to lo faccia anche per la funzione predict_sentences(). Ma non credo ti serva usarla.
 
-    - Testare diverse configurazioni di Tf-idf vectorizer come nel esempio del notebook medico
+- Capire cosa fa la funzione most_informative_feature_for_class(), potrebbe essere utile per presentare le features più importanti al orale
 
-    - Provare gli altri due classificatori (nel codice c'è svm)
+- Capire quale sia il miglior classificatore da usare (nella presentazione mettiamo tutti i test che abbiamo fatto)
 
-    - Provare a fare la funzione che in base alla posizione ed un raggio va a consigliare il ristorante in base al numero delle stelline
-    
-    >>>>>FATTA la si trova nel modulo utils.py
+- Replicare l'esperimento del tipo che non riesce a raggiungere una accuratezza alta classificando le recensioni in base al numero di stelline (nel codice del notebook abbiamo quello sulla sentiment analysis)
 
-    - Replicare l'esperimento del tipo che non riesce a raggiungere una accuratezza alta classificando le recensioni in base al numero di stelline (nel codice del notebook abbiamo quello sulla sentiment analysis)
+- Fare la nostra funzione principale che usa un classficatore sul sentimento (quindi non usiamo più le stelline) e che data una distanza e una posizione dica quale sia quello migliore.
 
-- Lui ha detto di provare un'altra libreria per fare un confronto senza specificare altri dettagli... Vedremo dopo che abbiamo fatto le nostre di prove
+- Provare quella libreria che ha detto lui
+
+- Fare il bot telegram
