@@ -18,9 +18,10 @@
 - Fare il bot telegram
 ```bash
 $ pip install python-telegram-bot --upgrade
-$ cd custom_libs
 $ python3 bot.py
 ```
+
+<img src="tg_screenshot.png" alt="drawing" width="400"/>
 
 > Testo di esempio di uso (coordinate, distanza massima): 30.460718, -97.792874, 10<br>
 > Testo di esempio di uso (coordinate, distanza massima): sdasdctrasd<br>
