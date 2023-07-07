@@ -1,8 +1,10 @@
 from math import sin, cos, sqrt, atan2, radians
 import pandas as pd
+from custom_libs import db
+from custom_libs import classification
 
 
-def select_points_of_interest(df, current_position, max_distance):
+def get_closest_restaurants(df, current_position, max_distance):
     """Takes a dataframe, array of current position, max distance and returns a dataframe
        with the points of interest that are within the max distance from the current position"""
     selected_points = []
@@ -50,27 +52,13 @@ def select_points_of_interest(df, current_position, max_distance):
     return df_points.drop(df_points.columns[0], axis=1)
 
 
-def get_id_restaurant_best_rated(df):
-    """Takes a dataframe with point of interest and returns the 
-       id of the restaurant with the best rating"""
-
-    # If the dataframe is empty return -1
-    if df.empty:
-        return -1
-
-    # Else return the id of the restaurant with the best rating
+def get_best_rated_restaurant(df):
+    """Takes a dataframe with point of interest and returns the restaurant with the best rating"""
     df_app = df.copy()
     df_app = df_app.groupby('id')['rating_number'].mean()
     df_app.sort_values(ascending=False)
 
-    return df_app.index[0]
-
-
-def get_restaurant_best_rated(df):
-    """Takes a dataframe with point of interest and returns the restaurant with the best rating"""
-    id = get_id_restaurant_best_rated(df)
-    if id == -1:
-        return 'no restaurant found'
+    id = df_app.index[0]
 
     result = df.loc[df['id'] == id, [
         'store_address', 'latitude', 'longitude', 'id']]
@@ -78,22 +66,68 @@ def get_restaurant_best_rated(df):
     return result.groupby('id').first()
 
 
+def get_best_sentiment_restaurant(df):
+    count_df = df.groupby(['id', 'sentiment']).size().unstack(fill_value=0)
+
+    # Rename the columns for better clarity
+    sentiments_names = classification.Sentiment.get_all()
+    count_df.columns = classification.Sentiment.get_all()
+
+    # Reset the index to make 'id' a regular column
+    count_df = count_df.reset_index()
+
+    # Calculate the total reviews for each ID
+    count_df['Total'] = count_df['Negative'] + \
+        count_df['Neutral'] + count_df['Positive']
+
+    # Divide Positive, Neutral, and Negative columns by Total
+    count_df['Positive'] = count_df['Positive'] / count_df['Total']
+    count_df['Neutral'] = count_df['Neutral'] / count_df['Total']
+    count_df['Negative'] = count_df['Negative'] / count_df['Total']
+
+    # Sort the dataframe by 'Positive' column in descending order
+    sorted_df = count_df.sort_values(by='Positive', ascending=False)
+
+    # Select the restaurant with the highest positive rating percentage
+    best_restaurant_id = sorted_df.iloc[0]['id']
+
+    result = df.loc[df['id'] == best_restaurant_id, [
+        'store_address', 'latitude', 'longitude', 'id']]
+
+    return result.groupby('id').first()
+
+
 def select_best_restaurant_from_stars(df, current_position, max_distance):
-    points = select_points_of_interest(df, current_position, max_distance)
-    best_point = get_restaurant_best_rated(points)
-    return best_point
+    closest_restaurants = get_closest_restaurants(
+        df, current_position, max_distance)
+    if closest_restaurants.empty:
+        raise Exception("No restaurant found")
+    return get_best_rated_restaurant(closest_restaurants)
+
+
+def select_best_restaurant_from_sentiment(df, current_position, max_distance):
+    closest_restaurants = get_closest_restaurants(
+        df, current_position, max_distance)
+    if closest_restaurants.empty:
+        raise Exception("No restaurant found")
+    return get_best_sentiment_restaurant(closest_restaurants)
 
 
 def best_restaurant_from_stars_reply(current_position, max_distance):
-    """per ora è scarna perchè è solo una prova,
-    inoltre siccome select_best_restaurant_from_stars resttuisce un tipo di parametro ambiguo sarà da rivedere
-    """
-    df = pd.read_csv(
-        '../datasets/McDonald_s_Reviews_preprocessed.csv', encoding="latin-1")
+    df = db.get_dataset('McDonald_s_Reviews_preprocessed')
+    try:
+        best_restaurant_df = select_best_restaurant_from_stars(
+            df, current_position, max_distance)
+        return f"Best restaurant is {best_restaurant_df['store_address'].values[0]}"
+    except Exception as e:
+        return str(e)
 
-    result = select_best_restaurant_from_stars(df, current_position, max_distance)
 
-    if type(result) == str and result == 'no restaurant found':
-        return result
-    else:
-        return f"Best restaurant is {result['store_address'].values[0]}"
+def best_restaurant_from_sentiment(current_position, max_distance):
+    df = db.get_dataset('McDonald_s_Reviews_preprocessed')
+    try:
+        best_restaurant_df = select_best_restaurant_from_sentiment(
+            df, current_position, max_distance)
+        return f"Best restaurant is {best_restaurant_df['store_address'].values[0]}"
+    except Exception as e:
+        return str(e)
