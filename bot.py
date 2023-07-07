@@ -53,9 +53,17 @@ async def reply_to_user(update: Update, context: ContextTypes.DEFAULT_TYPE) -> N
         await update.message.reply_text("Error: wrong format")
         return
     
-    result = utils.best_restaurant_from_sentiment(current_position, max_distance)
-    
-    await update.message.reply_text(result)
+    best_rated_result = utils.best_restaurant_from_stars_reply(current_position, max_distance)
+    best_feeling_result = utils.best_restaurant_from_sentiment_reply(current_position, max_distance)
+
+    # Stelline
+    await update.message.reply_text("Best rating: " + best_rated_result)
+
+    # Sentiment sul dataset di partenza
+    await update.message.reply_text("Best feeling: " + best_feeling_result)
+
+    # Sentiment sul dataset diverso
+    #
 
 
 def main() -> None:

@@ -118,16 +118,16 @@ def best_restaurant_from_stars_reply(current_position, max_distance):
     try:
         best_restaurant_df = select_best_restaurant_from_stars(
             df, current_position, max_distance)
-        return f"Best restaurant is {best_restaurant_df['store_address'].values[0]}"
+        return best_restaurant_df['store_address'].values[0]
     except Exception as e:
         return str(e)
 
 
-def best_restaurant_from_sentiment(current_position, max_distance):
+def best_restaurant_from_sentiment_reply(current_position, max_distance):
     df = db.get_dataset('McDonald_s_Reviews_preprocessed')
     try:
         best_restaurant_df = select_best_restaurant_from_sentiment(
             df, current_position, max_distance)
-        return f"Best restaurant is {best_restaurant_df['store_address'].values[0]}"
+        return best_restaurant_df['store_address'].values[0]
     except Exception as e:
         return str(e)
