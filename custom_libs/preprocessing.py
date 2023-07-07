@@ -22,7 +22,7 @@ def add_rating_number_column(df):
         lambda x: int(re.sub(r'\b(star|stars)\b', '', x, flags=re.IGNORECASE)))
 
 
-def preprocess_text1(raw_review):
+def preprocess_text(raw_review):
 
     # Delete html
     review_text = BeautifulSoup(
