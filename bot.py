@@ -4,7 +4,7 @@
 import logging
 
 from telegram import __version__ as TG_VER
-import utils
+from custom_libs import utils
 
 try:
     from telegram import __version_info__
@@ -53,7 +53,7 @@ async def reply_to_user(update: Update, context: ContextTypes.DEFAULT_TYPE) -> N
         await update.message.reply_text("Error: wrong format")
         return
     
-    result = utils.best_restaurant_from_stars_reply(current_position, max_distance)
+    result = utils.best_restaurant_from_sentiment(current_position, max_distance)
     
     await update.message.reply_text(result)
 
