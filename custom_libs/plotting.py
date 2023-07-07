@@ -2,7 +2,7 @@ import numpy as np
 import itertools
 from wordcloud import WordCloud
 import matplotlib.pyplot as plt
-get_ipython().run_line_magic('matplotlib', 'inline')
+#get_ipython().run_line_magic('matplotlib', 'inline')
 
 
 def plot_word_cloud(X, class_name, column_name):
