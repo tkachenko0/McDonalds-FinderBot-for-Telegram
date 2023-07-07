@@ -2,7 +2,7 @@
 
 ## Main
 
-- 💀 Capire quale sia il miglior classificatore da usare (nella presentazione mettiamo tutti i test che abbiamo fatto)
+- Capire quale sia il miglior classificatore da usare (nella presentazione mettiamo tutti i test che abbiamo fatto)
 
 - Provare quella libreria che ha detto lui
 
@@ -25,5 +25,3 @@
 $ pip install python-telegram-bot --upgrade
 $ python3 bot.py
 ```
-
-<img src="tg_screenshot.png" alt="drawing" width="400"/>
