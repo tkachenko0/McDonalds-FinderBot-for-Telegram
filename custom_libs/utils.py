@@ -54,8 +54,7 @@ def get_closest_restaurants(df, current_position, max_distance):
 
 def get_best_rated_restaurant(df):
     """Takes a dataframe with point of interest and returns the restaurant with the best rating"""
-    df_app = df.copy()
-    df_app = df_app.groupby('id')['rating_number'].mean()
+    df_app = df.groupby('id')['rating_number'].mean()
     df_app.sort_values(ascending=False)
 
     id = df_app.index[0]
@@ -70,7 +69,6 @@ def get_best_sentiment_restaurant(df):
     count_df = df.groupby(['id', 'sentiment']).size().unstack(fill_value=0)
 
     # Rename the columns for better clarity
-    sentiments_names = classification.Sentiment.get_all()
     count_df.columns = classification.Sentiment.get_all()
 
     # Reset the index to make 'id' a regular column
