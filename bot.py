@@ -54,7 +54,7 @@ async def reply_to_user(update: Update, context: ContextTypes.DEFAULT_TYPE) -> N
         return
     
     best_rated_result = utils.best_restaurant_from_stars_reply(current_position, max_distance)
-    best_feeling_result = utils.best_restaurant_from_sentiment_reply(current_position, max_distance)
+    best_feeling_result = utils.best_restaurant_from_sentiment_reply(current_position, max_distance, sentiment_column='sentiment_auto')
 
     # Stelline
     await update.message.reply_text("Best rating: " + best_rated_result)

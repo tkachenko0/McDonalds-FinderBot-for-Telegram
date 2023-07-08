@@ -125,7 +125,7 @@ def best_restaurant_from_sentiment_reply(current_position, max_distance, sentime
     df = db.get_dataset('McDonald_s_Reviews_preprocessed')
     try:
         best_restaurant_df = select_best_restaurant_from_sentiment(
-            df, current_position, max_distance)
+            df, current_position, max_distance, sentiment_column)
         return best_restaurant_df['store_address'].values[0]
     except Exception as e:
         return str(e)
