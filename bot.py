@@ -29,7 +29,8 @@ db_folder = "db_telegram_bot"
 
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     reply_keyboard = [["Stars", "Feeling", "All"]]
-    await update.message.reply_text("Chose operation", reply_markup=ReplyKeyboardMarkup(reply_keyboard, one_time_keyboard=True, input_field_placeholder=""))
+    start_mess = "Chose if you want to find the best rated MC or best feeling MC near to You. You can also shode to discover both."
+    await update.message.reply_text(start_mess, reply_markup=ReplyKeyboardMarkup(reply_keyboard, one_time_keyboard=True, input_field_placeholder=""))
     return CHOSE
 
 
@@ -64,7 +65,6 @@ async def location(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
 
 async def skip_location(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     user = update.message.from_user
-    logger.info("User %s did not send a location.", user.first_name)
     await update.message.reply_text("You seem a bit paranoid!")
 
     return RADIUS
@@ -93,7 +93,7 @@ async def radius(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     if chose == "Stars" or chose == "All":
         try:
             best_restaurant = br.select_best_restaurant_from_stars(df, current_position, max_distance)
-            await update.message.reply_text("Best rating restaurant's address: " + best_restaurant['store_address'].values[0])
+            await update.message.reply_text("Best ⭐ rated restaurant's address: " + best_restaurant['store_address'].values[0])
             lat, long = best_restaurant['latitude'].values[0], best_restaurant['longitude'].values[0]
             await update.message.reply_location(latitude=lat, longitude=long)
             await update.message.reply_photo(photo=open('bot_images/mc1.jpg', 'rb'))
@@ -104,7 +104,7 @@ async def radius(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     if chose == "Feeling" or chose == "All":
         try:
             best_restaurant = br.select_best_restaurant_from_sentiment(df, current_position, max_distance, sentiment_column='sentiment_auto')
-            await update.message.reply_text("Best feeling restaurant's address: " + best_restaurant['store_address'].values[0])
+            await update.message.reply_text("Best 💫 feeling restaurant's address: " + best_restaurant['store_address'].values[0])
             lat, long = best_restaurant['latitude'].values[0], best_restaurant['longitude'].values[0]
             await update.message.reply_location(latitude=lat, longitude=long)
             await update.message.reply_photo(photo=open('bot_images/mc2.jpg', 'rb'))
@@ -117,14 +117,13 @@ async def radius(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
 
 async def cancel(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     user = update.message.from_user
-    logger.info("User %s canceled the conversation.", user.first_name)
-    await update.message.reply_text("Bye! I hope we can talk again some day.", reply_markup=ReplyKeyboardRemove())
-
+    bye_mess = "Bye! I hope we can talk again some day."
+    await update.message.reply_text(bye_mess, reply_markup=ReplyKeyboardRemove())
     return ConversationHandler.END
 
 
 def main() -> None:
-    application = Application.builder().token("6366438224:AAE_s84P3k9yCd96OIHIz6aTlS7A3vRNTvI").build()
+    application = Application.builder().token("6313189469:AAHsJw9c4M_HHoMgrrQ8zNjfi7oYYgeVAO4").build()
 
     conv_handler = ConversationHandler(
         entry_points=[CommandHandler("start", start)],
