@@ -1,98 +1,177 @@
-
-# pip install python-telegram-bot --upgrade
+from custom_libs import utils
+import json
 
 import logging
 
 from telegram import __version__ as TG_VER
-from custom_libs import utils
 
 try:
     from telegram import __version_info__
 except ImportError:
     __version_info__ = (0, 0, 0, 0, 0)  # type: ignore[assignment]
 
-if __version_info__ < (20, 0, 0, "alpha", 1):
+if __version_info__ < (20, 0, 0, "alpha", 5):
     raise RuntimeError(
         f"This example is not compatible with your current PTB version {TG_VER}. To view the "
         f"{TG_VER} version of this example, "
         f"visit https://docs.python-telegram-bot.org/en/v{TG_VER}/examples.html"
     )
-from telegram import ForceReply, Update
-from telegram.ext import Application, CommandHandler, ContextTypes, MessageHandler, filters
+from telegram import ReplyKeyboardMarkup, ReplyKeyboardRemove, Update
+from telegram.ext import (
+    Application,
+    CommandHandler,
+    ContextTypes,
+    ConversationHandler,
+    MessageHandler,
+    filters,
+)
 
 # Enable logging
 logging.basicConfig(
     format="%(asctime)s - %(name)s - %(levelname)s - %(message)s", level=logging.INFO
 )
+# set higher logging level for httpx to avoid all GET and POST requests being logged
+logging.getLogger("httpx").setLevel(logging.WARNING)
+
 logger = logging.getLogger(__name__)
 
+CHOSE, LOCATION, RADIUS = range(3)
 
-# Define a few command handlers. These usually take the two arguments update and
-# context.
-async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
-    """Send a message when the command /start is issued."""
-    user = update.effective_user
-    await update.message.reply_html(
-        rf"Hi {user.mention_html()}!",
-        reply_markup=ForceReply(selective=True),
+db_folder = "db_telegram_bot"
+
+
+async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
+    """Starts the conversation and asks the user about their gender."""
+    reply_keyboard = [["Stars", "Feeling", "All"]]
+
+    await update.message.reply_text(
+        "Chose operation",
+        reply_markup=ReplyKeyboardMarkup(
+            reply_keyboard, one_time_keyboard=True, input_field_placeholder="Stars, Feeling or All"
+        ),
     )
 
-
-async def help_command(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
-    """Send a message when the command /help is issued."""
-    await update.message.reply_text("Help!")
+    return CHOSE
 
 
-async def reply_to_user(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
-    user_text = update.message.text
+async def operation(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
+    """Commento."""
+    user = update.message.from_user
+    logger.info("Gender of %s: %s", user.first_name, update.message.text)
+    await update.message.reply_text(
+        "Now, send me your location please, or send /skip if you don't want to."
+    )
+
+    chat_id = update.message.chat_id
+    chose = update.message.text
+
+    # save the chose in a json
+    with open(f"{db_folder}/chose_{chat_id}.json", "w") as outfile:
+        json.dump({"chose": chose}, outfile)
+
+    return LOCATION
+
+
+async def location(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
+    """Commento."""
+    user = update.message.from_user
+    user_location = update.message.location
+
+    latitude = user_location.latitude
+    longitude = user_location.longitude
+    chat_id = update.message.chat_id
+
+    with open(f"{db_folder}/location_{chat_id}.json", "w") as outfile:
+        json.dump({"latitude": latitude, "longitude": longitude}, outfile)
+
+    await update.message.reply_text("Write max distance")
+
+    return RADIUS
+
+
+async def skip_location(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
+    """Commento."""
+    user = update.message.from_user
+    logger.info("User %s did not send a location.", user.first_name)
+    await update.message.reply_text("You seem a bit paranoid!")
+
+    return RADIUS
+
+
+async def radius(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
+    """Commento."""
+    max_distance = 0
 
     try:
-        current_position = [float(user_text.split(",")[0]), float(user_text.split(",")[1])]
-        max_distance = int(user_text.split(",")[2])
+        max_distance = int(update.message.text)
     except:
         await update.message.reply_text("Error: wrong format")
-        return
-    
-    best_rated_result = utils.best_restaurant_from_stars_reply(current_position, max_distance)
-    best_feeling_result = utils.best_restaurant_from_sentiment_reply(current_position, max_distance, sentiment_column='sentiment_auto')
+        return ConversationHandler.END
 
-    # Stelline
-    await update.message.reply_text("Best rating: " + best_rated_result)
+    chat_id = update.message.chat_id
+    with open(f"{db_folder}/location_{chat_id}.json", "r") as infile:
+        user_location = json.load(infile)
 
-    # Sentiment sul dataset di partenza
-    await update.message.reply_text("Best feeling: " + best_feeling_result)
+    with open(f"{db_folder}/chose_{chat_id}.json", "r") as infile:
+        chose = json.load(infile)["chose"]
+
+    current_position = [user_location["latitude"], user_location["longitude"]]
+
+    best_rated_result = utils.best_restaurant_from_stars_reply(
+        current_position, max_distance)
+    lat_best_rated_result = 39.303026
+    long_best_rated_result = 39.303026
+
+    best_feeling_result = utils.best_restaurant_from_sentiment_reply(
+        current_position, max_distance, sentiment_column='sentiment_auto')
+    lat_best_feeling_result = 39.303026
+    long_best_feeling_result = 39.303026
+
+    if chose == "Stars" or chose == "All":
+        await update.message.reply_location(latitude=lat_best_rated_result, longitude=long_best_rated_result)
+        await update.message.reply_text("Best rating: " + best_rated_result)
+        
+    if chose == "Feeling" or chose == "All":
+        await update.message.reply_location(latitude=lat_best_feeling_result, longitude=long_best_feeling_result,)
+        await update.message.reply_text("Best feeling: " + best_feeling_result)
+
+    return ConversationHandler.END
 
 
-# Define a location handler
-async def location(update, context):
-    # Get the latitude and longitude from the message
-    latitude = update.message.location.latitude
-    longitude = update.message.location.longitude
+async def cancel(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
+    """Cancels and ends the conversation."""
+    user = update.message.from_user
+    logger.info("User %s canceled the conversation.", user.first_name)
+    await update.message.reply_text(
+        "Bye! I hope we can talk again some day.", reply_markup=ReplyKeyboardRemove()
+    )
 
-    
-
-    # Send the latitude and longitude as a reply
-    await update.message.reply_text(f'Latitude: {latitude}, Longitude: {longitude}')
+    return ConversationHandler.END
 
 
 def main() -> None:
-    """Start the bot."""
+    """Run the bot."""
     # Create the Application and pass it your bot's token.
-    application = Application.builder().token("6366438224:AAE_s84P3k9yCd96OIHIz6aTlS7A3vRNTvI").build()
+    application = Application.builder().token(
+        "6366438224:AAE_s84P3k9yCd96OIHIz6aTlS7A3vRNTvI").build()
 
-    # on different commands - answer in Telegram
-    application.add_handler(CommandHandler("start", start))
-    application.add_handler(CommandHandler("help", help_command))
+    conv_handler = ConversationHandler(
+        entry_points=[CommandHandler("start", start)],
+        states={
+            CHOSE: [MessageHandler(filters.Regex("^(Stars|Feeling|All)$"), operation)],
+            LOCATION: [
+                MessageHandler(filters.LOCATION, location),
+                CommandHandler("skip", skip_location),
+            ],
+            RADIUS: [MessageHandler(filters.TEXT & ~filters.COMMAND, radius)],
+        },
+        fallbacks=[CommandHandler("cancel", cancel)],
+    )
 
-    # on non command i.e message - echo the message on Telegram
-    application.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, reply_to_user))
-
-    # Register the location handler
-    location_handler = MessageHandler(filters.LOCATION, location)
-    application.add_handler(location_handler)
+    application.add_handler(conv_handler)
 
     # Run the bot until the user presses Ctrl-C
-    application.run_polling()
+    application.run_polling(allowed_updates=Update.ALL_TYPES)
 
 
 if __name__ == "__main__":

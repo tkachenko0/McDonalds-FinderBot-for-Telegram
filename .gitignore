@@ -1,7 +1,7 @@
 # Mac/OSX
 .DS_Store
 
-dump_models/
+
 datasets/
 .vscode/
 
