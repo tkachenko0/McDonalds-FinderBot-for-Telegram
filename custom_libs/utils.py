@@ -113,23 +113,3 @@ def select_best_restaurant_from_sentiment(df, current_position, max_distance, se
     if closest_restaurants.empty:
         raise Exception("No restaurant found")
     return get_best_sentiment_restaurant(closest_restaurants, sentiment_column)
-
-
-def best_restaurant_from_stars_reply(current_position, max_distance):
-    df = db.get_dataset('McDonald_s_Reviews_preprocessed')
-    try:
-        best_restaurant_df = select_best_restaurant_from_stars(
-            df, current_position, max_distance)
-        return best_restaurant_df['store_address'].values[0]
-    except Exception as e:
-        return str(e)
-
-
-def best_restaurant_from_sentiment_reply(current_position, max_distance, sentiment_column='sentiment'):
-    df = db.get_dataset('McDonald_s_Reviews_preprocessed')
-    try:
-        best_restaurant_df = select_best_restaurant_from_sentiment(
-            df, current_position, max_distance, sentiment_column)
-        return best_restaurant_df['store_address'].values[0]
-    except Exception as e:
-        return str(e)

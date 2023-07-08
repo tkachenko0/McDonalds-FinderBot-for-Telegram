@@ -1,4 +1,5 @@
 from custom_libs import utils
+from custom_libs import db
 import json
 
 import logging
@@ -117,23 +118,29 @@ async def radius(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
 
     current_position = [user_location["latitude"], user_location["longitude"]]
 
-    best_rated_result = utils.best_restaurant_from_stars_reply(
-        current_position, max_distance)
-    lat_best_rated_result = 39.303026
-    long_best_rated_result = 39.303026
-
-    best_feeling_result = utils.best_restaurant_from_sentiment_reply(
-        current_position, max_distance, sentiment_column='sentiment_auto')
-    lat_best_feeling_result = 39.303026
-    long_best_feeling_result = 39.303026
+    df = db.get_dataset('McDonald_s_Reviews_preprocessed')
 
     if chose == "Stars" or chose == "All":
-        await update.message.reply_location(latitude=lat_best_rated_result, longitude=long_best_rated_result)
-        await update.message.reply_text("Best rating: " + best_rated_result)
-        
+        try:
+            best_restaurant = utils.select_best_restaurant_from_stars(
+                df, current_position, max_distance)
+            lat = best_restaurant['latitude'].values[0]
+            long = best_restaurant['longitude'].values[0]
+            await update.message.reply_location(latitude=lat, longitude=long)
+            await update.message.reply_text("Best rating adders: " + best_restaurant['store_address'].values[0])
+        except Exception as e:
+            await update.message.reply_text(str(e))
+
     if chose == "Feeling" or chose == "All":
-        await update.message.reply_location(latitude=lat_best_feeling_result, longitude=long_best_feeling_result,)
-        await update.message.reply_text("Best feeling: " + best_feeling_result)
+        try:
+            best_restaurant = utils.select_best_restaurant_from_sentiment(
+                df, current_position, max_distance, sentiment_column='sentiment_auto')
+            lat = best_restaurant['latitude'].values[0]
+            long = best_restaurant['longitude'].values[0]
+            await update.message.reply_location(latitude=lat, longitude=long)
+            await update.message.reply_text("Best rating adders: " + best_restaurant['store_address'].values[0])
+        except Exception as e:
+            await update.message.reply_text(str(e))
 
     return ConversationHandler.END
 
