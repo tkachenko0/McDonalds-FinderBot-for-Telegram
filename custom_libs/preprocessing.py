@@ -4,8 +4,8 @@ from nltk.corpus import stopwords
 from nltk.stem import WordNetLemmatizer
 
 
-def preprocess_dataframe(df, column_name, proprocessing_function):
-    df[column_name+"_clean"] = df[column_name].apply(proprocessing_function)
+def preprocess_dataframe(df, column_name, cleaned_text_column_name,  proprocessing_function):
+    df[cleaned_text_column_name] = df[column_name].apply(proprocessing_function)
 
 
 def add_id_column(df, columns):

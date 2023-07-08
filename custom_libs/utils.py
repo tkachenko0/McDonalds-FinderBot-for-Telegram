@@ -65,8 +65,8 @@ def get_best_rated_restaurant(df):
     return result.groupby('id').first()
 
 
-def get_best_sentiment_restaurant(df):
-    count_df = df.groupby(['id', 'sentiment']).size().unstack(fill_value=0)
+def get_best_sentiment_restaurant(df, sentiment_column):
+    count_df = df.groupby(['id', sentiment_column]).size().unstack(fill_value=0)
 
     # Rename the columns for better clarity
     count_df.columns = classification.Sentiment.get_all()
@@ -103,12 +103,12 @@ def select_best_restaurant_from_stars(df, current_position, max_distance):
     return get_best_rated_restaurant(closest_restaurants)
 
 
-def select_best_restaurant_from_sentiment(df, current_position, max_distance):
+def select_best_restaurant_from_sentiment(df, current_position, max_distance, sentiment_column='sentiment'):
     closest_restaurants = get_closest_restaurants(
         df, current_position, max_distance)
     if closest_restaurants.empty:
         raise Exception("No restaurant found")
-    return get_best_sentiment_restaurant(closest_restaurants)
+    return get_best_sentiment_restaurant(closest_restaurants, sentiment_column)
 
 
 def best_restaurant_from_stars_reply(current_position, max_distance):
@@ -121,7 +121,7 @@ def best_restaurant_from_stars_reply(current_position, max_distance):
         return str(e)
 
 
-def best_restaurant_from_sentiment_reply(current_position, max_distance):
+def best_restaurant_from_sentiment_reply(current_position, max_distance, sentiment_column='sentiment'):
     df = db.get_dataset('McDonald_s_Reviews_preprocessed')
     try:
         best_restaurant_df = select_best_restaurant_from_sentiment(
