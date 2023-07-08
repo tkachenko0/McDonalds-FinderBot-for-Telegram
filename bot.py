@@ -48,7 +48,7 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     await update.message.reply_text(
         "Chose operation",
         reply_markup=ReplyKeyboardMarkup(
-            reply_keyboard, one_time_keyboard=True, input_field_placeholder="Stars, Feeling or All"
+            reply_keyboard, one_time_keyboard=True, input_field_placeholder=""
         ),
     )
 
