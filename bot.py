@@ -17,9 +17,7 @@ from telegram import ReplyKeyboardMarkup, ReplyKeyboardRemove, Update
 from telegram.ext import (Application, CommandHandler, ContextTypes, ConversationHandler, MessageHandler, filters)
 
 logging.basicConfig(format="%(asctime)s - %(name)s - %(levelname)s - %(message)s", level=logging.INFO)
-
 logging.getLogger("httpx").setLevel(logging.WARNING)
-
 logger = logging.getLogger(__name__)
 
 CHOSE, LOCATION, RADIUS = range(3)
@@ -29,14 +27,12 @@ db_folder = "db_telegram_bot"
 
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     reply_keyboard = [["Stars", "Feeling", "All"]]
-    start_mess = "Chose if you want to find the best rated MC or best feeling MC near to You. You can also shode to discover both."
+    start_mess = "Chose if you want to find the best rated MC or best feeling MC near to You. You can also shose to discover both."
     await update.message.reply_text(start_mess, reply_markup=ReplyKeyboardMarkup(reply_keyboard, one_time_keyboard=True, input_field_placeholder=""))
     return CHOSE
 
 
 async def operation(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
-    user = update.message.from_user
-    logger.info("Gender of %s: %s", user.first_name, update.message.text)
     await update.message.reply_text("Now, send me your location please, or send /skip if you don't want to.")
 
     chat_id = update.message.chat_id
@@ -50,7 +46,6 @@ async def operation(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
 
 async def location(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     user_location = update.message.location
-
     latitude = user_location.latitude
     longitude = user_location.longitude
     chat_id = update.message.chat_id
@@ -64,9 +59,7 @@ async def location(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
 
 
 async def skip_location(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
-    user = update.message.from_user
     await update.message.reply_text("You seem a bit paranoid!")
-
     return RADIUS
 
 
@@ -93,13 +86,14 @@ async def radius(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     if chose == "Stars" or chose == "All":
         try:
             best_restaurant = br.select_best_restaurant_from_stars(df, current_position, max_distance)
-            await update.message.reply_text("Best ⭐ rated restaurant's address: " + best_restaurant['store_address'].values[0])
+            await update.message.reply_text("Best ⭐ rat restaurant's address: " + best_restaurant['store_address'].values[0])
             lat, long = best_restaurant['latitude'].values[0], best_restaurant['longitude'].values[0]
             await update.message.reply_location(latitude=lat, longitude=long)
             await update.message.reply_photo(photo=open('bot_images/mc1.jpg', 'rb'))
         except Exception as e:
             await update.message.reply_text(str(e))
             await update.message.reply_photo(photo=open('bot_images/404.gif', 'rb'))
+            return ConversationHandler.END
 
     if chose == "Feeling" or chose == "All":
         try:
@@ -111,12 +105,9 @@ async def radius(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
         except Exception as e:
             await update.message.reply_text(str(e))
             await update.message.reply_photo(photo=open('bot_images/404.gif', 'rb'))
-
-    return ConversationHandler.END
-
+            return ConversationHandler.END
 
 async def cancel(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
-    user = update.message.from_user
     bye_mess = "Bye! I hope we can talk again some day."
     await update.message.reply_text(bye_mess, reply_markup=ReplyKeyboardRemove())
     return ConversationHandler.END
@@ -124,7 +115,7 @@ async def cancel(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
 
 def main() -> None:
     application = Application.builder().token("6313189469:AAHsJw9c4M_HHoMgrrQ8zNjfi7oYYgeVAO4").build()
-
+    
     conv_handler = ConversationHandler(
         entry_points=[CommandHandler("start", start)],
         states={
@@ -139,7 +130,6 @@ def main() -> None:
     )
 
     application.add_handler(conv_handler)
-
     application.run_polling(allowed_updates=Update.ALL_TYPES)
 
 
