@@ -49,7 +49,7 @@ def preprocess_text(raw_review):
 
         # Remmove some words
     words_to_be_deleted = ["Mcdonalds", "Mcdonald",
-                           "mc donald", "mcd", "order", "\u00BD", "\u00EF"]
+                           "mc donald", "mcd", "\u00BD", "\u00EF"]
 
     cleaned_words = [w for w in lemmitize_words if not w in
                      [s.lower() for s in words_to_be_deleted]]
