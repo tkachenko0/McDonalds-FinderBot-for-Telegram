@@ -80,9 +80,9 @@ def append_sentiment_for_each_row(df, column_name, new_column_name='sentiment'):
         sentiment = sia.polarity_scores(text)
         compound_score = sentiment['compound']
 
-        if compound_score >= 0.2:
+        if compound_score >= 0.05:
             sentiment_labels.append(Sentiment.POSITIVE)
-        elif compound_score <= -0.2:
+        elif compound_score <= -0.05:
             sentiment_labels.append(Sentiment.NEGATIVE)
         else:
             sentiment_labels.append(Sentiment.NEUTRAL)
