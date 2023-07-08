@@ -47,7 +47,7 @@ def preprocess_text(raw_review):
     # Lemmitization
     lemmitize_words = lemmatize_words(meaningful_words)
 
-        # Remmove some words
+    # Remmove some words
     words_to_be_deleted = ["Mcdonalds", "Mcdonald",
                            "mc donald", "mcd", "\u00BD", "\u00EF"]
 

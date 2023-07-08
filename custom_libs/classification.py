@@ -1,10 +1,7 @@
 import pandas as pd
 from sklearn import metrics
-from sklearn.model_selection import train_test_split
-from nltk.sentiment import SentimentIntensityAnalyzer
-
-# import custom modules
 import custom_libs.plotting as plotting
+from nltk.sentiment import SentimentIntensityAnalyzer
 
 
 class Sentiment:

@@ -4,6 +4,7 @@
 
 datasets/
 .vscode/
+test.py
 
 review_clean.txt
 

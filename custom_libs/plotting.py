@@ -2,13 +2,11 @@ import numpy as np
 import itertools
 from wordcloud import WordCloud
 import matplotlib.pyplot as plt
-#get_ipython().run_line_magic('matplotlib', 'inline')
 
 
 def plot_word_cloud(X, class_name, column_name, plt_name):
     plt.figure(figsize=(20, 20))
-    wc = WordCloud(max_words=500, width=1600,
-                   height=800).generate(" ".join(X[column_name]))
+    wc = WordCloud(max_words=500, width=1600,height=800).generate(" ".join(X[column_name]))
     plt.imshow(wc, interpolation='bilinear')
     plt.title(f'Word cloud for {class_name}, in sentiment version: {plt_name}', fontsize=14)
 
