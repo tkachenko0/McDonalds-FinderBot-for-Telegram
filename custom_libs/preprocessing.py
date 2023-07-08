@@ -24,6 +24,9 @@ def add_rating_number_column(df):
 
 def preprocess_text(raw_review):
 
+    if(type(raw_review) != str):
+        return ""
+
     # Delete html
     review_text = BeautifulSoup(
         raw_review, 'html.parser').get_text()
