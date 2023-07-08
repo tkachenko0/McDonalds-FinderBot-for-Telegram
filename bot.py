@@ -62,8 +62,17 @@ async def reply_to_user(update: Update, context: ContextTypes.DEFAULT_TYPE) -> N
     # Sentiment sul dataset di partenza
     await update.message.reply_text("Best feeling: " + best_feeling_result)
 
-    # Sentiment sul dataset diverso
-    #
+
+# Define a location handler
+async def location(update, context):
+    # Get the latitude and longitude from the message
+    latitude = update.message.location.latitude
+    longitude = update.message.location.longitude
+
+    
+
+    # Send the latitude and longitude as a reply
+    await update.message.reply_text(f'Latitude: {latitude}, Longitude: {longitude}')
 
 
 def main() -> None:
@@ -77,6 +86,10 @@ def main() -> None:
 
     # on non command i.e message - echo the message on Telegram
     application.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, reply_to_user))
+
+    # Register the location handler
+    location_handler = MessageHandler(filters.LOCATION, location)
+    application.add_handler(location_handler)
 
     # Run the bot until the user presses Ctrl-C
     application.run_polling()
