@@ -66,7 +66,8 @@ def get_best_rated_restaurant(df):
 
 
 def get_best_sentiment_restaurant(df, sentiment_column):
-    count_df = df.groupby(['id', sentiment_column]).size().unstack(fill_value=0)
+    count_df = df.groupby(['id', sentiment_column]
+                          ).size().unstack(fill_value=0)
 
     # Rename the columns for better clarity
     count_df.columns = classification.Sentiment.get_all()
@@ -83,8 +84,11 @@ def get_best_sentiment_restaurant(df, sentiment_column):
     count_df['Neutral'] = count_df['Neutral'] / count_df['Total']
     count_df['Negative'] = count_df['Negative'] / count_df['Total']
 
+    count_df['Score'] = ((count_df['Positive']*(1)) + (count_df['Neutral']
+                         * (0)) + (count_df['Negative']*(-2))) / count_df['Total']
+
     # Sort the dataframe by 'Positive' column in descending order
-    sorted_df = count_df.sort_values(by='Positive', ascending=False)
+    sorted_df = count_df.sort_values(by='Score', ascending=False)
 
     # Select the restaurant with the highest positive rating percentage
     best_restaurant_id = sorted_df.iloc[0]['id']
