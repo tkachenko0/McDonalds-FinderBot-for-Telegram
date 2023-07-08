@@ -1,11 +1,14 @@
 import re
 from bs4 import BeautifulSoup
+import nltk
 from nltk.corpus import stopwords
+from nltk.corpus import wordnet
 from nltk.stem import WordNetLemmatizer
 
 
 def preprocess_dataframe(df, column_name, cleaned_text_column_name,  proprocessing_function):
-    df[cleaned_text_column_name] = df[column_name].apply(proprocessing_function)
+    df[cleaned_text_column_name] = df[column_name].apply(
+        proprocessing_function)
 
 
 def add_id_column(df, columns):
@@ -24,7 +27,7 @@ def add_rating_number_column(df):
 
 def preprocess_text(raw_review):
 
-    if(type(raw_review) != str):
+    if (type(raw_review) != str):
         return ""
 
     # Delete html
@@ -41,15 +44,39 @@ def preprocess_text(raw_review):
     meaningful_words = [w for w in words if not w in stopwords.words(
         'english')]
 
-    # Remmove some words
+    # Lemmitization
+    lemmitize_words = lemmatize_words(meaningful_words)
+
+        # Remmove some words
     words_to_be_deleted = ["Mcdonalds", "Mcdonald",
                            "mc donald", "mcd", "order", "\u00BD", "\u00EF"]
 
-    cleaned_words = [w for w in meaningful_words if not w in
+    cleaned_words = [w for w in lemmitize_words if not w in
                      [s.lower() for s in words_to_be_deleted]]
 
-    # Lemmitization
-    lemmitize_words = [WordNetLemmatizer().lemmatize(w)
-                       for w in cleaned_words]
+    return (' '.join(cleaned_words))
 
-    return (' '.join(lemmitize_words))
+def lemmatize_words(words):
+    lemmitize_words = list()
+
+    for word in words:
+        # Determine the POS tag for each word
+        pos_tag = nltk.pos_tag([word])[0][1][0].lower()
+
+        # Map the POS tag to WordNet tags
+        if pos_tag.startswith('j'):
+            pos_tag = wordnet.ADJ
+        elif pos_tag.startswith('v'):
+            pos_tag = wordnet.VERB
+        elif pos_tag.startswith('n'):
+            pos_tag = wordnet.NOUN
+        elif pos_tag.startswith('r'):
+            pos_tag = wordnet.ADV
+        else:
+            pos_tag = wordnet.NOUN  # Default to noun if no specific tag is found
+
+        lemma = WordNetLemmatizer().lemmatize(word, pos=pos_tag)
+
+        lemmitize_words.append(lemma)
+
+    return lemmitize_words
