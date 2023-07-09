@@ -4,16 +4,12 @@
 </tr>
 <tr>
 <td>
-
 This is a Python-based Telegram bot that allows users to find McDonald's restaurants based on their location and specified preferences. The bot utilizes various features, including distance calculation, ratings, and sentiment analysis, to provide users with accurate and relevant results.
-
 </td>
 <td>
-
 <img src="bot_images/logo.png" alt="McDonaBot logo" width="100"/> 
 
 *[freepik.com](https://www.freepik.com)*
-
 </td>
 </tr>
 </table>
@@ -21,15 +17,17 @@ This is a Python-based Telegram bot that allows users to find McDonald's restaur
 > ### Disclaimer: 
 > Please note that this project is developed as a university project and is intended for educational purposes only. It does not have any commercial intentions or affiliations with McDonald's or any other organizations mentioned.
 
-  * [Features](#features)
-  * [Getting Started](#getting-started)
-  * [Usage](#usage)
-  * [Implementation](#implementation)
-    + [Preprocessing](#preprocessing)
-    + [Analysis based on the number of stars](#analysis-based-on-the-number-of-stars)
-    + [Analysis based on the sentiment](#analysis-based-on-the-sentiment)
-  * [Contributing](#contributing)
-  * [License](#license)
+- [McDonald's Finder Bot for Telegram 🔥](#mcdonalds-finder-bot-for-telegram-)
+  - [Features](#features)
+  - [Getting Started](#getting-started)
+  - [Usage](#usage)
+  - [Implementation](#implementation)
+    - [Preprocessing](#preprocessing)
+    - [Analysis based on the number of stars](#analysis-based-on-the-number-of-stars)
+    - [Analysis based on the sentiment](#analysis-based-on-the-sentiment)
+  - [Contributing](#contributing)
+  - [License](#license)
+  - [Presentazione](#presentazione)
 
 ## Features
 
@@ -74,11 +72,13 @@ python bot.py
 
 Then the bot will provide the requested recommendation based on ratings or on sentiment analysis.
 
-<img src="bot_images/1start.PNG" alt="Start" width="150"/>
-<img src="bot_images/2chose.PNG" alt="Start" width="150"/>
-<img src="bot_images/2feeling.PNG" alt="Start" width="150"/>
-<img src="bot_images/3location.PNG" alt="Start" width="150"/>
-<img src="bot_images/4result.PNG" alt="Start" width="150"/>
+<div style="display: flex; justify-content: space-between;">
+  <img src="bot_images/1start.PNG" alt="Start" width="150"/>
+  <img src="bot_images/2chose.PNG" alt="Start" width="150"/>
+  <img src="bot_images/2feeling.PNG" alt="Start" width="150"/>
+  <img src="bot_images/3location.PNG" alt="Start" width="150"/>
+  <img src="bot_images/4result.PNG" alt="Start" width="150"/>
+</div>
 
 
 ## Implementation
