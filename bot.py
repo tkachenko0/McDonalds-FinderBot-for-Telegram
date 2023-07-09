@@ -26,8 +26,8 @@ db_folder = "db_telegram_bot"
 
 
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
-    reply_keyboard = [["Stars", "Feeling", "All"]]
-    start_mess = "Chose if you want to find the best rated MC or best feeling MC near to You. You can also shose to discover both."
+    reply_keyboard = [["Stars", "Feeling", "Both"]]
+    start_mess = f"Hi, chose if you wish to locate the best-rated MC or the one with the best emotion and feeling experience. You can choose to find both as well."
     await update.message.reply_text(start_mess, reply_markup=ReplyKeyboardMarkup(reply_keyboard, one_time_keyboard=True, input_field_placeholder=""))
     return CHOSE
 
@@ -53,7 +53,7 @@ async def location(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     with open(f"{db_folder}/location_{chat_id}.json", "w") as outfile:
         json.dump({"latitude": latitude, "longitude": longitude}, outfile)
 
-    await update.message.reply_text("Write max distance")
+    await update.message.reply_text("Write max distance in km from your position to find the best restaurant.")
 
     return RADIUS
 
@@ -83,7 +83,7 @@ async def radius(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
 
     df = db.get_dataset('McDonald_s_Reviews_preprocessed')
 
-    if chose == "Stars" or chose == "All":
+    if chose == "Stars" or chose == "Both":
         try:
             best_restaurant = br.select_best_restaurant_from_stars(df, current_position, max_distance)
             await update.message.reply_text("Best ⭐ rat restaurant's address: " + best_restaurant['store_address'].values[0])
@@ -95,7 +95,7 @@ async def radius(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
             await update.message.reply_photo(photo=open('bot_images/404.gif', 'rb'))
             return ConversationHandler.END
 
-    if chose == "Feeling" or chose == "All":
+    if chose == "Feeling" or chose == "Both":
         try:
             best_restaurant = br.select_best_restaurant_from_sentiment(df, current_position, max_distance, sentiment_column='sentiment_auto')
             await update.message.reply_text("Best 💫 feeling restaurant's address: " + best_restaurant['store_address'].values[0])
@@ -119,7 +119,7 @@ def main() -> None:
     conv_handler = ConversationHandler(
         entry_points=[CommandHandler("start", start)],
         states={
-            CHOSE: [MessageHandler(filters.Regex("^(Stars|Feeling|All)$"), operation)],
+            CHOSE: [MessageHandler(filters.Regex("^(Stars|Feeling|Both)$"), operation)],
             LOCATION: [
                 MessageHandler(filters.LOCATION, location),
                 CommandHandler("skip", skip_location),
