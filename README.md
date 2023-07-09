@@ -45,7 +45,7 @@ This is a Python-based Telegram bot that allows users to find McDonald's restaur
 git clone 
 ```
 
-1. Install the required dependencies:
+2. Install the required dependencies:
 
 ```
 pip install python-telegram-bot --upgrade
@@ -54,7 +54,7 @@ pip install nltk
 pip install matplotlib
 ```
 
-1. Run the bot:
+3. Run the bot:
 
 ```
 python bot.py
