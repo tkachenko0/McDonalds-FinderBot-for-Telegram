@@ -111,3 +111,9 @@ This project is licensed under the [MIT License](LICENSE).
 - Risultato bot per la classificazione
 - Applichiamo i due al dataset del mcdonalds e vediamo (nelle differenze) quale (secondo noi) sia il migliore
 - Risultati Finali
+
+## Mail per il prof che mandieamo alla fine
+
+Salve prof, abbiamo fatto. Questa è la nostra repository dove abbiamo i nostri notebook e file python, compreso il chatbot di telegra. Abbiamo scritto anche un readme che comprende sia la descrizione delle funzionalità del bot, sia l’implementazione. Abbiamo anche incluso degli screenshot per essere più chiari.
+
+Sarebbe possibile fare l’esame durante la settimana prossima?
