@@ -1,6 +1,4 @@
-# McDonald's Finder Bot for Telegram 🔥
-
-<img src="bot_images/logo.png" alt="McDonaBot logo" width="100"/>
+# <img src="bot_images/logo.png" alt="McDonaBot logo" width="50"/> McDonald's Finder Bot for Telegram 🔥
 *logo generated with [freepik.com](https://www.freepik.com)*
 
 This is a Python-based Telegram bot that allows users to find McDonald's restaurants based on their location and specified preferences. The bot utilizes various features, including distance calculation, ratings, and sentiment analysis, to provide users with accurate and relevant results.
