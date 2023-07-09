@@ -86,7 +86,7 @@ async def radius(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     if chose == "Stars" or chose == "Both":
         try:
             best_restaurant = br.select_best_restaurant_from_stars(df, current_position, max_distance)
-            await update.message.reply_text("Best ⭐ rat restaurant's address: " + best_restaurant['store_address'].values[0])
+            await update.message.reply_text("Best ⭐ rated restaurant's address: " + best_restaurant['store_address'].values[0])
             lat, long = best_restaurant['latitude'].values[0], best_restaurant['longitude'].values[0]
             await update.message.reply_location(latitude=lat, longitude=long)
             await update.message.reply_photo(photo=open('bot_images/mc1.jpg', 'rb'))
