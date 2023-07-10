@@ -89,7 +89,14 @@ Then the bot will provide the requested recommendation based on ratings or on se
 
 ### Analysis based on the sentiment
 In this part is performed sentiment anlysis perfomed on two different methods: 
-1. Creation of classifier to obtain the sentiment labels on a different dataset. The dataset contains the a message and the sentiment associated. This analysis is contained in [nb_NostroCLF](./nb_NostroCLF.ipynb)
+1. Creation of classifier to obtain the sentiment labels on a different dataset. The dataset contains the a message and the sentiment associated. This analysis is contained in [nb_NostroCLF](./nb_NostroCLF.ipynb). 
+The steps are: 
+  1. Loading of dataset of chats 
+  2. Preprocessing of text
+  3. Splitting of training set 
+  4. Training and testing (with showing of results) -> this part includes: Passive Agressive Classifier, Logistic Regression Classifier, Multinomial Naive Bayes Classifier, Support Vector Classifier. For each classifier is used a different vectorizer with unigram, bigram and trigram. 
+  5. Choosing the best classifier
+  6. Saving the model
 2. 
 ## Contributing
 
