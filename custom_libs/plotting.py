@@ -10,7 +10,6 @@ def plot_word_cloud(X, class_name, column_name, plt_name):
     plt.imshow(wc, interpolation='bilinear')
     plt.title(f'Word cloud for {class_name}, in sentiment version: {plt_name}', fontsize=14)
 
-
 def plot_confusion_matrix(cm, classes,
                           normalize=False,
                           title='Confusion matrix',
@@ -44,3 +43,19 @@ def plot_confusion_matrix(cm, classes,
     plt.tight_layout()
     plt.ylabel('True label')
     plt.xlabel('Predicted label')
+
+
+def plot_accuracies(results,labels):  
+    """
+    this function plots the accuracies of the models in the results dict
+    the dict is in the form of {model_name: [accuracies]}
+    the labels are the names of the vectorizers with they configuration and are used as xticks. 
+    """
+    plt.figure(figsize=(10, 10))
+    for model_name, accuracies in results.items():
+        plt.plot(accuracies, label=model_name)
+    
+    plt.xticks(np.arange(len(labels)), labels)
+    plt.legend()
+    plt.show()
+
