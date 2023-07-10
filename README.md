@@ -66,7 +66,7 @@ python bot.py
 
 1. Start the bot by searching for it on Telegram ([@DonMCbot](https://t.me/DonMCbot)) and clicking the "Start" button.
 
-2. Chose if you want to find a the bestrated McDonald's restaurant or the one with the best sentiment (or both).
+2. Chose if you want to find a the best rated McDonald's restaurant or the one with the best sentiment (or both).
 
 3. Enter your location or share your current location with the bot.
 
@@ -137,8 +137,7 @@ This project is licensed under the [MIT License](LICENSE).
 - Applichiamo i due al dataset del mcdonalds e vediamo (nelle differenze) quale (secondo noi) sia il migliore
 - Risultati Finali
 
-## Mail per il prof che mandieamo alla fine
+## Mail per il prof che mandiamo alla fine
 
-Salve prof, abbiamo fatto. Questa è la nostra repository dove abbiamo i nostri notebook e file python, compreso il chatbot di telegra. Abbiamo scritto anche un readme che comprende sia la descrizione delle funzionalità del bot, sia l’implementazione. Abbiamo anche incluso degli screenshot per essere più chiari.
-
+Salve prof, abbiamo fatto. Questa è la nostra repository dove abbiamo i nostri notebook e file python, compreso il chatbot di telegra. Abbiamo scritto anche un readme che comprende sia la descrizione delle funzionalità del bot, sia l’implementazione. Abbiamo anche incluso degli screenshot per essere più chiari. Stiamo iniziando a fare le presentazione per il discorso.
 Sarebbe possibile fare l’esame durante la settimana prossima?
