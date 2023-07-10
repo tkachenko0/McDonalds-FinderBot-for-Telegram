@@ -111,7 +111,7 @@ A classifier is created to extract the sentiment labels from a distinct dataset.
   6. Saving the model
 
 #### Library classifier
-Utilising the "nltk.sentiment" library to do sentiment analysis on the McDonald's reviews dataset. The sentiment labels are acquired using the "SentimentIntensityAnalyzer()" method. 
+Utilising the [nltk.sentiment](https://www.nltk.org/howto/sentiment.html) library to do sentiment analysis on the [McDonald's Store Reviews dataset](https://www.kaggle.com/datasets/nelgiriyewithana/mcdonalds-store-reviews).
 
 The sentiment analysis is carried out in the [nb_Progetto](./nb_progetto.ipynb) using "SentimentIntensityAnalyser()" and our classifier. The best classifier is then determined by comparing the results of these two analyses. The filtering to choose the best restaurant based on sentiment is then done. 
 
