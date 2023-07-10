@@ -25,6 +25,8 @@ This is a Python-based Telegram bot that allows users to find McDonald's restaur
     - [Preprocessing](#preprocessing)
     - [Analysis based on the number of stars](#analysis-based-on-the-number-of-stars)
     - [Analysis based on the sentiment](#analysis-based-on-the-sentiment)
+      - [Homemade classifier](#homemade-classifier)
+      - [Library classifier](#library-classifier)
   - [Contributing](#contributing)
   - [License](#license)
   - [Presentazione](#presentazione)
@@ -88,18 +90,29 @@ Then the bot will provide the requested recommendation based on ratings or on se
 ### Analysis based on the number of stars
 
 ### Analysis based on the sentiment
-In this part is performed sentiment anlysis perfomed on two different methods: 
-1. Creation of classifier to obtain the sentiment labels on a different dataset. The dataset contains the a message and the sentiment associated. This analysis is contained in [nb_NostroCLF](./nb_NostroCLF.ipynb). 
-The steps are: 
-  1. Loading of dataset of chats 
-  2. Preprocessing of text
-  3. Splitting of training set 
-  4. Training and testing (with showing of results) -> this part includes: Passive Agressive Classifier, Logistic Regression Classifier, Multinomial Naive Bayes Classifier, Support Vector Classifier. For each classifier is used a different vectorizer with unigram, bigram and trigram. 
-  5. Choosing the best classifier
-  6. Saving the model
-2. 
-## Contributing
+In this part is performed sentiment analysis on two different methods.
 
+#### Homemade classifier
+Creation of a classifier to obtain the sentiment labels on a different dataset. The dataset contains the message and the sentiment associated. This analysis is contained in [nb_NostroCLF](./nb_NostroCLF.ipynb). 
+The steps are: 
+  1. Loading of the dataset of chats 
+  2. Preprocessing of text
+  3. Splitting of the training set 
+  4. Training and testing (with a showing of results): This part includes:
+     - Passive Agressive Classifier
+     - Logistic Regression Classifier
+     - Multinomial Naive Bayes Classifier
+     - Support Vector Classifier
+     - **For each classifier is used a different vectorizer with unigram, bigram, and trigram**
+  6. Choosing the best classifier
+  7. Saving the model
+
+#### Library classifier
+Performing the sentiment analysis of McDonald's reviews dataset with the library "nltk.sentiment". With the function "SentimentIntensityAnalyzer()" the sentiment labels are obtained. 
+
+In the [nb_Progetto](./nb_progetto.ipynb) is perfomed the sentiment analyis with "SentimentIntensityAnalyser()" and our classifier. After that is performed a comparison with these two anlyisis to obtain the best classifier. Following is performed the filtering to search the best restaurant on sentiment. The choose is perfomed by a formula that assign at each restaurant a **score** that is used to find the best. The formula is [(TotalPositive \* 1) + (TotalNeutral \* 0) + (TotalNegative \* (-2))] / TotalReviews* .
+
+## Contributing
 Contributions are welcome! If you have any ideas, suggestions, or improvements, please submit a pull request. Make sure to follow the existing code style and include appropriate tests.
 
 One significant contribution to the project would be extending the database to include McDonald's restaurants from countries other than the United States. Currently, the bot focuses on providing recommendations based on the available data within the USA from [McDonald's Store Reviews dataset](https://www.kaggle.com/datasets/nelgiriyewithana/mcdonalds-store-reviews).
