@@ -105,9 +105,8 @@ The steps are:
      - Support Vector Classifier
      - **For each classifier is used a different vectorizer with unigram, bigram, and trigram**
   6. Choosing the best classifier
-  <div style="display: flex; justify-content: space-between;">
-      <img src="analysis_images/results_classifiers.PNG" alt="Start" width="300"/>
-      
+   <div align="center" style="display: flex; justify-content: space-between;">
+      <img src="analysis_images/results_classifiers.png" alt="center" width="300"/>
   </div>
   8. Saving the model
 
