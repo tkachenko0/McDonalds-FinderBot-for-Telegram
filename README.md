@@ -29,7 +29,6 @@ This is a Python-based Telegram bot that allows users to find McDonald's restaur
       - [Library classifier](#library-classifier)
   - [Contributing](#contributing)
   - [License](#license)
-  - [Presentazione](#presentazione)
 
 ## Features
 
@@ -90,30 +89,38 @@ Then the bot will provide the requested recommendation based on ratings or on se
 ### Analysis based on the number of stars
 
 ### Analysis based on the sentiment
-In this part is performed sentiment analysis on two different methods.
+This section employs two alternative techniques for sentiment analysis.
 
 #### Homemade classifier
-Creation of a classifier to obtain the sentiment labels on a different dataset. The dataset contains the message and the sentiment associated. This analysis is contained in [nb_NostroCLF](./nb_NostroCLF.ipynb). 
-The steps are: 
+A classifier is created to extract the sentiment labels from a distinct dataset. The message and the related sentiment are contained in the dataset. This analysis is carried out in the notebook [nb_NostroCLF](./nb_NostroCLF.ipynb) and the steps are: 
   1. Loading of the dataset of chats 
   2. Preprocessing of text
-  3. Splitting of the training set 
-  4. Training and testing (with a showing of results): This part includes:
+  3. Splitting in Training set and Test sets
+  4. Training and testing of the following classifiers showing also the results:
      - Passive Agressive Classifier
      - Logistic Regression Classifier
      - Multinomial Naive Bayes Classifier
      - Support Vector Classifier
-     - **For each classifier is used a different vectorizer with unigram, bigram, and trigram**
-  6. Choosing the best classifier
+
+        **A separate vectorizer containing unigram, bigram, and trigram is utilised for each classifier.**
+
+  5. Choosing the best classifier
    <div align="center" style="display: flex; justify-content: space-between;">
       <img src="analysis_images/results_classifiers.png" alt="center" width="300"/>
   </div>
-  8. Saving the model
+  6. Saving the model
 
 #### Library classifier
-Performing the sentiment analysis of McDonald's reviews dataset with the library "nltk.sentiment". With the function "SentimentIntensityAnalyzer()" the sentiment labels are obtained. 
+Utilising the "nltk.sentiment" library to do sentiment analysis on the McDonald's reviews dataset. The sentiment labels are acquired using the "SentimentIntensityAnalyzer()" method. 
 
-In the [nb_Progetto](./nb_progetto.ipynb) is perfomed the sentiment analyis with "SentimentIntensityAnalyser()" and our classifier. After that is performed a comparison with these two anlyisis to obtain the best classifier. Following is performed the filtering to search the best restaurant on sentiment. The choose is perfomed by a formula that assign at each restaurant a **score** that is used to find the best. The formula is [(TotalPositive \* 1) + (TotalNeutral \* 0) + (TotalNegative \* (-2))] / TotalReviews* .
+The sentiment analysis is carried out in the [nb_Progetto](./nb_progetto.ipynb) using "SentimentIntensityAnalyser()" and our classifier. The best classifier is then determined by comparing the results of these two analyses. The filtering to choose the best restaurant based on sentiment is then done. 
+
+The choice of the best restaurant is made on the basis of a **score**. The objective of this score is not to overlook information on how many neutral and negative reviews there are as well as positive ones. The logic is to go and assign weights to the different categories with the following formula:
+
+\[
+\frac{{(TotalPositive \times 1) + (TotalNeutral \times 0) + (TotalNegative \times (-2))}}{{TotalReviews}}
+\]
+
 
 ## Contributing
 Contributions are welcome! If you have any ideas, suggestions, or improvements, please submit a pull request. Make sure to follow the existing code style and include appropriate tests.
@@ -123,21 +130,3 @@ One significant contribution to the project would be extending the database to i
 ## License
 
 This project is licensed under the [MIT License](LICENSE).
-
-## Presentazione
-
-- Definire il problema
-- MetStelline
-  - risultato bot
-- Preprocessing
-- MetSia
-- MetNostroCLF (capire cosa fa la funzione most_informative_feature_for_class())
-    - Tutti i classificatori che abbiamo usato e quello migliore sulla base del acc, ...
-- Risultato bot per la classificazione
-- Applichiamo i due al dataset del mcdonalds e vediamo (nelle differenze) quale (secondo noi) sia il migliore
-- Risultati Finali
-
-## Mail per il prof che mandiamo alla fine
-
-Salve prof, abbiamo fatto. Questa è la nostra repository dove abbiamo i nostri notebook e file python, compreso il chatbot di telegra. Abbiamo scritto anche un readme che comprende sia la descrizione delle funzionalità del bot, sia l’implementazione. Abbiamo anche incluso degli screenshot per essere più chiari. Stiamo iniziando a fare le presentazione per il discorso.
-Sarebbe possibile fare l’esame durante la settimana prossima?
