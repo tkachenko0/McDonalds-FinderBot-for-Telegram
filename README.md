@@ -105,7 +105,11 @@ The steps are:
      - Support Vector Classifier
      - **For each classifier is used a different vectorizer with unigram, bigram, and trigram**
   6. Choosing the best classifier
-  7. Saving the model
+  <div style="display: flex; justify-content: space-between;">
+      <img src="analysis_images/results_classifiers.PNG" alt="Start" width="300"/>
+      
+  </div>
+  8. Saving the model
 
 #### Library classifier
 Performing the sentiment analysis of McDonald's reviews dataset with the library "nltk.sentiment". With the function "SentimentIntensityAnalyzer()" the sentiment labels are obtained. 
