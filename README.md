@@ -88,7 +88,9 @@ Then the bot will provide the requested recommendation based on ratings or on se
 ### Analysis based on the number of stars
 
 ### Analysis based on the sentiment
-
+In this part is performed sentiment anlysis perfomed on two different methods: 
+1. Creation of classifier to obtain the sentiment labels on a different dataset. The dataset contains the a message and the sentiment associated. This analysis is contained in [nb_NostroCLF](./nb_NostroCLF.ipynb)
+2. 
 ## Contributing
 
 Contributions are welcome! If you have any ideas, suggestions, or improvements, please submit a pull request. Make sure to follow the existing code style and include appropriate tests.

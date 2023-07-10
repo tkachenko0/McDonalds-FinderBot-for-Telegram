@@ -46,7 +46,7 @@ def most_informative_feature_for_class(vectorizer, classifier, classlabel, n=10)
         print(classlabel, feat, coef)
 
 
-def test_classifiers(model_classes, vectorizers, x_train, x_test, y_train, y_test):
+def test_classifiers(model_classes, vectorizers, labels_vectorizers, x_train, x_test, y_train, y_test):
     results = {}
     for model_class in model_classes:
         for i, vectorizer in enumerate(vectorizers):
@@ -55,7 +55,7 @@ def test_classifiers(model_classes, vectorizers, x_train, x_test, y_train, y_tes
             x_test_trasformed = vectorizer.transform(x_test)
             y_pred = train_and_predict(model, x_train_trasformed, x_test_trasformed, y_train)
             accuracy = metrics.accuracy_score(y_test, y_pred)
-            print(f"Accuracy for {model_class.__name__} with vectorizer {i}:", accuracy)
+            print(f"Accuracy for {model_class.__name__} with vectorizer {labels_vectorizers[i]}:", accuracy)
             
             #insert into results dict the name of the model and an array of accuracies for each vectorizer
             if model_class.__name__ not in results:

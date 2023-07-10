@@ -55,7 +55,8 @@ def plot_accuracies(results,labels):
     for model_name, accuracies in results.items():
         plt.plot(accuracies, label=model_name)
     
-    plt.xticks(np.arange(len(labels)), labels)
+    plt.xticks(np.arange(len(labels)), labels, rotation=45)
+    plt.ylabel('Accuracy')
     plt.legend()
     plt.show()
 
