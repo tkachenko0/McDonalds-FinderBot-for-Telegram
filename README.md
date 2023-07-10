@@ -100,7 +100,7 @@ The organization of the project is as follows:
     └── analysis_images              # Images for the analysis
     └── bot.py                       # Bot implementation
     └── nb_NostroCLF.ipynb           # Notebook for building our classifier
-        └── nb_Progetto.ipynb        # Notebook for testing the core functionalities
+    └── nb_Progetto.ipynb            # Notebook for testing the core functionalities
 
 ### Preprocessing 🧹
 In the preprocessing phase, we initially group the reviews for each restaurant based on the coordinates present in each review.
