@@ -43,7 +43,7 @@ This is a Python-based Telegram bot that allows users to find McDonald's restaur
 1. Clone the repository:
 
 ```
-git clone 
+git clone https://github.com/tkachenko0/McDonalds-FinderBot-for-Telegram
 ```
 
 2. Install the required dependencies:
@@ -117,9 +117,7 @@ The sentiment analysis is carried out in the [nb_Progetto](./nb_progetto.ipynb) 
 
 The choice of the best restaurant is made on the basis of a **score**. The objective of this score is not to overlook information on how many neutral and negative reviews there are as well as positive ones. The logic is to go and assign weights to the different categories with the following formula:
 
-\[
-\frac{{(TotalPositive \times 1) + (TotalNeutral \times 0) + (TotalNegative \times (-2))}}{{TotalReviews}}
-\]
+$$\frac{{(NumTotalPositive \times 1) + (NumTotalNeutral \times 0) + (NumTotalNegative \times (-2))}}{{NumTotalReviews}}$$
 
 
 ## Contributing
