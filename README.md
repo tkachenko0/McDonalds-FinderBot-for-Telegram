@@ -22,9 +22,9 @@ This is a Python-based Telegram bot that allows users to find McDonald's restaur
   - [Getting Started](#getting-started)
   - [Usage](#usage)
   - [Implementation](#implementation)
-    - [Preprocessing](#preprocessing)
-    - [Analysis based on the number of stars](#analysis-based-on-the-number-of-stars)
-    - [Analysis based on the sentiment](#analysis-based-on-the-sentiment)
+    - [Preprocessing 🧹](#preprocessing-)
+    - [Analysis based on the number of stars ⭐](#analysis-based-on-the-number-of-stars-)
+    - [Analysis based on the sentiment 💫](#analysis-based-on-the-sentiment-)
       - [Homemade classifier](#homemade-classifier)
       - [Library classifier](#library-classifier)
   - [Contributing](#contributing)
@@ -84,11 +84,35 @@ Then the bot will provide the requested recommendation based on ratings or on se
 
 ## Implementation
 
-### Preprocessing
+The organization of the project is as follows:
 
-### Analysis based on the number of stars
+    .
+    ├── custom_libs                  # Our custom libraries                   
+    │   ├── best_restaurants.py      # Selection of the best place (stars or sentiment)
+    │   ├── classification.py        # For testing the classifiers
+    │   ├── db.py                    # Database management
+    │   ├── dump.py                  # Dump of the models and vectorizers
+    │   ├── plotting.py              # Plotting of the results
+    │   ├── preprocessing.py         # Preprocessing of the text
+    └── datasets                     # Datasets used for the analysis
+    └── dump_models                  # Dump of the models and vectorizers
+    └── bot_images                   # Images for for the bot
+    └── analysis_images              # Images for the analysis
+    └── bot.py                       # Bot implementation
+    └── nb_NostroCLF.ipynb           # Notebook for building our classifier
+        └── nb_Progetto.ipynb        # Notebook for testing the core functionalities
 
-### Analysis based on the sentiment
+### Preprocessing 🧹
+In the preprocessing phase, we initially group the reviews for each restaurant based on the coordinates present in each review.
+
+Subsequently we dedicate ourselves to cleaning the text by removing html elements, we take only alphabetic characters with a regular expression, we eliminate the stopwords and some words present in most of the reviews and we perform the lemmatization.
+
+### Analysis based on the number of stars ⭐
+The dataset contains textual reviews for each restaurant where the user also specifies the rating expressed in number of stars, from 1 to 5.
+
+We can only choose the restaurants that the user can reach after receiving his location and the maximum travel distance. Then, we may choose the best restaurant. The best restaurant is the one with the highest average rating.
+
+### Analysis based on the sentiment 💫
 This section employs two alternative techniques for sentiment analysis.
 
 #### Homemade classifier
