@@ -99,8 +99,8 @@ The organization of the project is as follows:
     └── bot_images                   # Images for for the bot
     └── analysis_images              # Images for the analysis
     └── bot.py                       # Bot implementation
-    └── nb_NostroCLF.ipynb           # Notebook for building our classifier
-    └── nb_Progetto.ipynb            # Notebook for testing the core functionalities
+    └── nb_OurCLF.ipynb           # Notebook for building our classifier
+    └── nb_Project.ipynb            # Notebook for testing the core functionalities
 
 ### Preprocessing 🧹
 In the preprocessing phase, we initially group the reviews for each restaurant based on the coordinates present in each review.
@@ -116,7 +116,7 @@ We can only choose the restaurants that the user can reach after receiving his l
 This section employs two alternative techniques for sentiment analysis.
 
 #### Homemade classifier
-A classifier is created to extract the sentiment labels from a distinct dataset. The message and the related sentiment are contained in the dataset. This analysis is carried out in the notebook [nb_NostroCLF](./nb_NostroCLF.ipynb) and the steps are: 
+A classifier is created to extract the sentiment labels from a distinct dataset. The message and the related sentiment are contained in the dataset. This analysis is carried out in the notebook [nb_OurCLF](./nb_OurCLF.ipynb) and the steps are: 
   1. Loading of the dataset of chats 
   2. Preprocessing of text
   3. Splitting in Training set and Test sets
@@ -137,7 +137,7 @@ A classifier is created to extract the sentiment labels from a distinct dataset.
 #### Library classifier
 Utilising the [nltk.sentiment](https://www.nltk.org/howto/sentiment.html) library to do sentiment analysis on the [McDonald's Store Reviews dataset](https://www.kaggle.com/datasets/nelgiriyewithana/mcdonalds-store-reviews).
 
-The sentiment analysis is carried out in the [nb_Progetto](./nb_progetto.ipynb) using "SentimentIntensityAnalyser()" and our classifier. The best classifier is then determined by comparing the results of these two analyses. The filtering to choose the best restaurant based on sentiment is then done. 
+The sentiment analysis is carried out in the [nb_Project](./nb_Project.ipynb) using "SentimentIntensityAnalyser()" and our classifier. The best classifier is then determined by comparing the results of these two analyses. The filtering to choose the best restaurant based on sentiment is then done. 
 
 The choice of the best restaurant is made on the basis of a **score**. The objective of this score is not to overlook information on how many neutral and negative reviews there are as well as positive ones. The logic is to go and assign weights to the different categories with the following formula:
 
