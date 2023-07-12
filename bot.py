@@ -90,6 +90,7 @@ async def radius(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
             lat, long = best_restaurant['latitude'].values[0], best_restaurant['longitude'].values[0]
             await update.message.reply_location(latitude=lat, longitude=long)
             await update.message.reply_photo(photo=open('bot_images/mc1.jpg', 'rb'))
+            return ConversationHandler.END
         except Exception as e:
             await update.message.reply_text(str(e))
             await update.message.reply_photo(photo=open('bot_images/404.gif', 'rb'))
@@ -102,6 +103,7 @@ async def radius(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
             lat, long = best_restaurant['latitude'].values[0], best_restaurant['longitude'].values[0]
             await update.message.reply_location(latitude=lat, longitude=long)
             await update.message.reply_photo(photo=open('bot_images/mc2.jpg', 'rb'))
+            return ConversationHandler.END
         except Exception as e:
             await update.message.reply_text(str(e))
             await update.message.reply_photo(photo=open('bot_images/404.gif', 'rb'))
