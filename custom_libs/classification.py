@@ -3,6 +3,7 @@ from sklearn import metrics
 import custom_libs.plotting as plotting
 from nltk.sentiment import SentimentIntensityAnalyzer
 
+
 class Sentiment:
     NEGATIVE = 'Negative'
     NEUTRAL = 'Neutral'
@@ -11,12 +12,6 @@ class Sentiment:
     @staticmethod
     def get_all():
         return [Sentiment.NEGATIVE, Sentiment.NEUTRAL, Sentiment.POSITIVE]
-
-
-
-def train_and_predict(model, x_train, x_test, y_train):
-    model.fit(x_train, y_train)
-    return model.predict(x_test)
 
 
 def show_results(y_test, y_pred, class_names):
@@ -30,50 +25,29 @@ def show_results(y_test, y_pred, class_names):
     plotting.plot_confusion_matrix(cm, classes=class_names)
 
 
-def test_classifier(model_class, x_train, x_test, y_train, y_test, class_names):
+def test_classifier(model_class, vectorizer, x_train, x_test, y_train, y_test):
     model = model_class()
-    y_pred = train_and_predict(model, x_train, x_test, y_train)
-    show_results(y_test, y_pred, class_names)
-    return model
-
-
-def most_informative_feature_for_class(vectorizer, classifier, classlabel, n=10):
-    labelid = list(classifier.classes_).index(classlabel)
-    feature_names = vectorizer.get_feature_names_out()
-    topn = sorted(zip(classifier.coef_[labelid], feature_names))[-n:]
-
-    for coef, feat in topn:
-        print(classlabel, feat, coef)
-
+    x_train_trasformed = vectorizer.fit_transform(x_train)
+    x_test_trasformed = vectorizer.transform(x_test)
+    model.fit(x_train_trasformed, y_train)
+    y_pred = model.predict(x_test_trasformed)
+    accuracy = metrics.accuracy_score(y_test, y_pred)
+    return accuracy
 
 def test_classifiers(model_classes, vectorizers, labels_vectorizers, x_train, x_test, y_train, y_test):
     results = {}
     for model_class in model_classes:
         for i, vectorizer in enumerate(vectorizers):
-            model = model_class()
-            x_train_trasformed = vectorizer.fit_transform(x_train)
-            x_test_trasformed = vectorizer.transform(x_test)
-            y_pred = train_and_predict(model, x_train_trasformed, x_test_trasformed, y_train)
-            accuracy = metrics.accuracy_score(y_test, y_pred)
+            accuracy = test_classifier(model_class, vectorizer, x_train, x_test, y_train, y_test)
             print(f"Accuracy for {model_class.__name__} with vectorizer {labels_vectorizers[i]}:", accuracy)
-            
-            #insert into results dict the name of the model and an array of accuracies for each vectorizer
+
+            # insert into results dict the name of the model and an array of accuracies for each vectorizer
             if model_class.__name__ not in results:
-                results[model_class.__name__] = [accuracy]  
-            else:   
+                results[model_class.__name__] = [accuracy]
+            else:
                 results[model_class.__name__].append(accuracy)
         print("\n")
     return results
-def predict_sentences(lst_sentences, vectorizer, model, preprocess_function):
-    df_test = pd.DataFrame(lst_sentences, columns=['test_sent'])
-
-    if preprocess_function is not None:
-        df_test["test_sent"] = df_test["test_sent"].apply(preprocess_function)
-
-    X = vectorizer.transform(lst_sentences)
-    prediction = model.predict(X)
-    df_test['prediction'] = prediction
-    return df_test
 
 
 def append_sentiment_for_each_row(df, column_name, new_column_name='sentiment'):
@@ -92,3 +66,10 @@ def append_sentiment_for_each_row(df, column_name, new_column_name='sentiment'):
 
     df[new_column_name] = sentiment_labels
 
+def most_informative_feature_for_class(vectorizer, classifier, classlabel, n=10):
+    labelid = list(classifier.classes_).index(classlabel)
+    feature_names = vectorizer.get_feature_names_out()
+    topn = sorted(zip(classifier.coef_[labelid], feature_names))[-n:]
+
+    for coef, feat in topn:
+        print(classlabel, feat, coef)

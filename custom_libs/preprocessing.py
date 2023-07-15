@@ -1,14 +1,8 @@
 import re
-from bs4 import BeautifulSoup
 import nltk
 from nltk.corpus import stopwords
 from nltk.corpus import wordnet
 from nltk.stem import WordNetLemmatizer
-
-
-def preprocess_dataframe(df, column_name, cleaned_text_column_name,  proprocessing_function):
-    df[cleaned_text_column_name] = df[column_name].apply(
-        proprocessing_function)
 
 
 def add_id_column(df, columns):
@@ -24,37 +18,6 @@ def add_rating_number_column(df):
     df['rating_number'] = df['rating'].apply(
         lambda x: int(re.sub(r'\b(star|stars)\b', '', x, flags=re.IGNORECASE)))
 
-
-def preprocess_text(raw_review):
-
-    if (type(raw_review) != str):
-        return ""
-
-    # Delete html
-    review_text = BeautifulSoup(
-        raw_review, 'html.parser').get_text()
-
-    # Make a space
-    letters_only = re.sub('[^a-zA-Z]', ' ', review_text)
-
-    # Lower letters
-    words = letters_only.lower().split()
-
-    # Delete stopwords
-    meaningful_words = [w for w in words if not w in stopwords.words(
-        'english')]
-
-    # Lemmitization
-    lemmitize_words = lemmatize_words(meaningful_words)
-
-    # Remmove some words
-    words_to_be_deleted = ["Mcdonalds", "Mcdonald",
-                           "mc donald", "mcd", "\u00BD", "\u00EF"]
-
-    cleaned_words = [w for w in lemmitize_words if not w in
-                     [s.lower() for s in words_to_be_deleted]]
-
-    return (' '.join(cleaned_words))
 
 def lemmatize_words(words):
     lemmitize_words = list()
@@ -80,3 +43,35 @@ def lemmatize_words(words):
         lemmitize_words.append(lemma)
 
     return lemmitize_words
+
+
+def preprocess_text(raw_review):
+
+    if (type(raw_review) != str): return ""
+
+    # Only letters
+    review_text = re.sub(r'[^a-zA-Z]', ' ', raw_review)
+
+    # Delete HTML
+    letters_only = re.sub(r"<[^<>]+>", ' ', review_text)
+
+    # Lower letters
+    words = letters_only.lower().split()
+
+    # Delete stopwords
+    meaningful_words = [w for w in words if not w in stopwords.words('english')]
+
+    # Lemmitization
+    lemmitize_words = lemmatize_words(meaningful_words)
+
+    # Remmove some words
+    words_to_be_deleted = ["Mcdonalds", "Mcdonald", "order", "mc",  "donald", "mcd", "\u00BD", "\u00EF"]
+
+    cleaned_words = [w for w in lemmitize_words if not w in [s.lower() for s in words_to_be_deleted]]
+
+    return (' '.join(cleaned_words))
+
+
+def preprocess_df(df, column_name, cleaned_text_column_name):
+    df[cleaned_text_column_name] = df[column_name].apply(preprocess_text)
+    return df
