@@ -99,8 +99,8 @@ The organization of the project is as follows:
     └── bot_images                   # Images for for the bot
     └── analysis_images              # Images for the analysis
     └── bot.py                       # Bot implementation
-    └── nb_OurCLF.ipynb           # Notebook for building our classifier
-    └── nb_Project.ipynb            # Notebook for testing the core functionalities
+    └── nb_OurCLF.ipynb              # Notebook for building our classifier
+    └── nb_Project.ipynb             # Notebook for testing the core functionalities
 
 ### Preprocessing 🧹
 In the preprocessing phase, we initially group the reviews for each restaurant based on the coordinates present in each review.
@@ -125,14 +125,20 @@ A classifier is created to extract the sentiment labels from a distinct dataset.
      - Logistic Regression Classifier
      - Multinomial Naive Bayes Classifier
      - Support Vector Classifier
-
-        **A separate vectorizer containing unigram, bigram, and trigram is utilised for each classifier.**
-
   5. Choosing the best classifier
-   <div align="center" style="display: flex; justify-content: space-between;">
-      <img src="analysis_images/results_classifiers.png" alt="center" width="300"/>
-  </div>
   6. Saving the model
+
+For each flassifier two types of vectorizers were used: **CountVectorizer** and **TfidfVectorizer**. Each of those was tested in different combinations of `ngram_range`:
+- Unigrams
+- From unigrams to bigrams
+- From unigrams to trigrams
+
+Here some of the results obtained for thise combinations:
+
+<div style="display: flex; justify-content: space-evenly;">
+  <img src="analysis_images/results_count_classifiers.png" width="40%"/>
+  <img src="analysis_images/results_tfidf_classifiers.png" width="40%"/>
+</div>
 
 #### Library classifier
 Utilising the [nltk.sentiment](https://www.nltk.org/howto/sentiment.html) library to do sentiment analysis on the [McDonald's Store Reviews dataset](https://www.kaggle.com/datasets/nelgiriyewithana/mcdonalds-store-reviews).
