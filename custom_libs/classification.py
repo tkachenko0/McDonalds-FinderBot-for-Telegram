@@ -2,6 +2,7 @@ import pandas as pd
 from sklearn import metrics
 import custom_libs.plotting as plotting
 from nltk.sentiment import SentimentIntensityAnalyzer
+import numpy as np
 
 
 class Sentiment:
@@ -34,6 +35,7 @@ def test_classifier(model_class, vectorizer, x_train, x_test, y_train, y_test):
     accuracy = metrics.accuracy_score(y_test, y_pred)
     return accuracy
 
+
 def test_classifiers(model_classes, vectorizers, labels_vectorizers, x_train, x_test, y_train, y_test):
     results = {}
     for model_class in model_classes:
@@ -48,6 +50,8 @@ def test_classifiers(model_classes, vectorizers, labels_vectorizers, x_train, x_
                 results[model_class.__name__].append(accuracy)
         print("\n")
     return results
+
+
 
 
 def append_sentiment_for_each_row(df, column_name, new_column_name='sentiment'):
@@ -73,3 +77,11 @@ def most_informative_feature_for_class(vectorizer, classifier, classlabel, n=10)
 
     for coef, feat in topn:
         print(classlabel, feat, coef)
+
+def vectorize(sentence,model):
+    words = sentence.split()
+    words_vecs = [model.wv[word] for word in words if word in model.wv]
+    if len(words_vecs) == 0:
+        return np.zeros(100)
+    words_vecs = np.array(words_vecs)
+    return words_vecs.mean(axis=0)
