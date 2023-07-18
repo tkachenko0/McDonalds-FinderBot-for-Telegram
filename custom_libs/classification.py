@@ -85,3 +85,28 @@ def vectorize(sentence,model):
         return np.zeros(100)
     words_vecs = np.array(words_vecs)
     return words_vecs.mean(axis=0)
+
+
+def select_best_classifier_from_accuracy(models,x_train, y_train, x_test, y_test):
+
+    best_model = None 
+    all_accuracies = []
+
+    #test ech model in models list
+    for model in models:
+        
+        model_name = model.__name__
+        clf = model()
+        act_model=  clf.fit(x_train, y_train)
+        y_pred = act_model.predict(x_test)
+        accuracy = metrics.accuracy_score(y_test, y_pred)
+        print(f"Accuracy of {model_name} is {accuracy}")
+
+        all_accuracies.append(accuracy)
+       
+        if best_model is None or accuracy > best_accuracy:
+            best_model = act_model
+            best_accuracy = accuracy
+    
+    return best_model
+    
