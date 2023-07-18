@@ -140,6 +140,8 @@ Here some of the results obtained for thise combinations:
   <img src="analysis_images/results_tfidf_classifiers.png" width="40%"/>
 </div>
 
+Additionally, a word2vec model with skip-gram has been tested with the best classifier found previously. 
+
 #### Library classifier
 Utilising the [nltk.sentiment](https://www.nltk.org/howto/sentiment.html) library to do sentiment analysis on the [McDonald's Store Reviews dataset](https://www.kaggle.com/datasets/nelgiriyewithana/mcdonalds-store-reviews).
 
