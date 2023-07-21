@@ -60,7 +60,7 @@ async def location(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
 
 async def skip_location(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     await update.message.reply_text("You seem a bit paranoid!")
-    return RADIUS
+    return ConversationHandler.END
 
 
 async def radius(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
