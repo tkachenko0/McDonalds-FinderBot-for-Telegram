@@ -4,7 +4,7 @@
 </tr>
 <tr>
 <td>
-This is a Python-based Telegram bot that allows users to find McDonald's restaurants based on their location and specified preferences. The bot utilizes various features, including distance calculation, ratings, and sentiment analysis, to provide users with accurate and relevant results.
+A Python-based Telegram bot to allow users to find McDonald's restaurants based on their location and specified preferences. The bot utilizes various features, including distance calculation, ratings, and sentiment analysis, to provide users with accurate and relevant results.
 </td>
 <td>
 <img src="bot_images/logo.png" alt="McDonaBot logo" width="100"/> 
